@@ -3,7 +3,12 @@ package com.javatpoint.ecormspringboot.common.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -13,11 +18,12 @@ import javax.persistence.Table;
 public class PermissionEntity extends BaseEntity {
 	private String name;
 
-	private String key;
+	private String aaa;
 
-	@ManyToMany(mappedBy = "permissions")
-	private Set<RoleEntity> roles = new HashSet<RoleEntity>();
-
+	@ManyToMany(mappedBy = "roles")
+	private Set<UserEntity> permisions = new HashSet<UserEntity>();
+	
+	
 	public String getName() {
 		return name;
 	}
@@ -27,19 +33,20 @@ public class PermissionEntity extends BaseEntity {
 	}
 
 	public String getKey() {
-		return key;
+		return aaa;
 	}
 
 	public void setKey(String key) {
-		this.key = key;
+		this.aaa = key;
 	}
 
-	public Set<RoleEntity> getRoles() {
-		return roles;
+	public Set<UserEntity> getPermisions() {
+		return permisions;
 	}
 
-	public void setRoles(Set<RoleEntity> roles) {
-		this.roles = roles;
+	public void setPermisions(Set<UserEntity> permisions) {
+		this.permisions = permisions;
 	}
+
 
 }
