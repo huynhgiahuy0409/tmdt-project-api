@@ -1,4 +1,4 @@
-package com.javatpoint.ecormspringboot.buyer.utils;
+package com.javatpoint.ecormspringboot.common.util;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -13,7 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import com.javatpoint.ecormspringboot.buyer.constance.SystemContance;
+import com.javatpoint.ecormspringboot.common.util.constance.SystemContance;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

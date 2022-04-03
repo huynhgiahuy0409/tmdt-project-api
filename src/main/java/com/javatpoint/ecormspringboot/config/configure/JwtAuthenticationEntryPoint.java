@@ -1,4 +1,4 @@
-package com.javatpoint.ecormspringboot.buyer.config;
+package com.javatpoint.ecormspringboot.config.configure;
 
 import java.io.IOException;
 import java.util.Collections;

@@ -1,4 +1,4 @@
-package com.javatpoint.ecormspringboot.buyer.constance;
+package com.javatpoint.ecormspringboot.common.util.constance;
 
 public class SystemContance {
 	public static final long EXPIRATION_TIME = 30000;

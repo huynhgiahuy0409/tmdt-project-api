@@ -1,18 +1,16 @@
-package com.javatpoint.ecormspringboot.buyer.service.imp;
+package com.javatpoint.ecormspringboot.common.service.imp;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.javatpoint.ecormspringboot.buyer.constance.SystemContance;
-import com.javatpoint.ecormspringboot.buyer.service.ITokenAuthenticationService;
-import com.javatpoint.ecormspringboot.buyer.utils.JWTUtil;
-
+import com.javatpoint.ecormspringboot.common.service.ITokenAuthenticationService;
+import com.javatpoint.ecormspringboot.common.util.JWTUtil;
+import com.javatpoint.ecormspringboot.common.util.constance.SystemContance;
 
 @Service
 public class TokenAuthenticateService implements ITokenAuthenticationService {

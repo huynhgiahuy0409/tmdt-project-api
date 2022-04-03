@@ -1,7 +1,6 @@
-package com.javatpoint.ecormspringboot.buyer.config;
+package com.javatpoint.ecormspringboot.config.configure;
 
-import java.util.Optional;
-
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -18,19 +17,19 @@ public class JpaAuditingConfig {
 		return new AuditorAwareImpl();
 	}
 
-//	@Bean
-//	public ModelMapper modelMapper() {
-//		return new ModelMapper();
-//	}
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
+	}
 
 	public static class AuditorAwareImpl implements AuditorAware<String> {
 		@Override
-		public Optional<String> getCurrentAuditor() {
+		public String getCurrentAuditor() {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			if (authentication == null || !authentication.isAuthenticated()) {
 				return null;
 			}
-			return Optional.of(authentication.getName());
+			return authentication.getName();
 		}
 	}
 }

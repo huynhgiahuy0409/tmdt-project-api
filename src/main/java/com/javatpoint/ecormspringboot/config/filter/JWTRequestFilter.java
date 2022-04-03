@@ -1,4 +1,4 @@
-package com.javatpoint.ecormspringboot.buyer.filter;
+package com.javatpoint.ecormspringboot.config.filter;
 
 import java.io.IOException;
 
@@ -12,13 +12,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import com.javatpoint.ecormspringboot.buyer.service.ITokenAuthenticationService;
 
+import com.javatpoint.ecormspringboot.common.service.ITokenAuthenticationService;
 
 /*Writing filter cho Security Web*/
 /*OncePerRequestFilter chỉ thực hiện một lần filter trong mỗi request.*/
 @Component
-public class JwtRequestFilter extends OncePerRequestFilter {
+public class JWTRequestFilter extends OncePerRequestFilter {
 
 	@Autowired
 	ITokenAuthenticationService tokenAuthenticationService;
@@ -26,6 +26,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
+		System.out.println("Authentication JWTRequestFilter " + SecurityContextHolder.getContext().getAuthentication());
 		Authentication authentication = this.tokenAuthenticationService.getAuthentication(request);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		filterChain.doFilter(request, response);

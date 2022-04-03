@@ -1,21 +1,14 @@
 package com.javatpoint.ecormspringboot.common.entity;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "permission")
-public class PermissionEntity extends BaseEntity {
+@Table(name = "coupon")
+public class CouponEntity extends BaseEntity {
 	private String name;
-
 	private String code;
-
-	@ManyToMany(mappedBy = "permissions")
-	private Set<RoleEntity> roles = new HashSet<RoleEntity>();
+	private double value;
 
 	public String getName() {
 		return name;
@@ -33,12 +26,12 @@ public class PermissionEntity extends BaseEntity {
 		this.code = code;
 	}
 
-	public Set<RoleEntity> getRoles() {
-		return roles;
+	public double getValue() {
+		return value;
 	}
 
-	public void setRoles(Set<RoleEntity> roles) {
-		this.roles = roles;
+	public void setValue(double value) {
+		this.value = value;
 	}
 
 }

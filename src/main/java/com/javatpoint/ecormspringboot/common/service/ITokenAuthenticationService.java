@@ -1,4 +1,4 @@
-package com.javatpoint.ecormspringboot.buyer.service;
+package com.javatpoint.ecormspringboot.common.service;
 
 import javax.servlet.http.HttpServletRequest;
 
