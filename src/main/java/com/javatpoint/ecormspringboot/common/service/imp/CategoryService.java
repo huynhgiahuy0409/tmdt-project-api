@@ -22,7 +22,6 @@ public class CategoryService implements ICategoryService {
 	public CategoryEntity save(CategoryDTO category) {
 		// TODO Auto-generated method stub
 		CategoryEntity result = this.categoryRepository.saveAndFlush(this.mp.map(category, CategoryEntity.class));
-		System.out.println(result);
 		return result;
 	}
 

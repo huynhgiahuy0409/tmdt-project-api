@@ -19,6 +19,6 @@ public class ObjectMapperUtils {
 	}
 
 	public <D, T> D map(T entity, Class<D> desClass) {
-		return modelMapper.map(entity, desClass);
+		return this.modelMapper.map(entity, desClass);
 	}
 }

@@ -42,4 +42,13 @@ public class BrandEntity extends BaseEntity {
 		this.status = status;
 	}
 
+	public Set<ProductEntity> getProducst() {
+		return producst;
+	}
+
+	public void setProducst(Set<ProductEntity> producst) {
+		this.producst = producst;
+	}
+
+
 }
