@@ -1,5 +1,10 @@
 package com.javatpoint.ecormspringboot.common.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "recommendAge")
 public class RecommendAgeEntity extends BaseEntity {
 	private String range;
 

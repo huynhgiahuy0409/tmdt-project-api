@@ -1,5 +1,8 @@
 package com.javatpoint.ecormspringboot.common.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,9 +19,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "user")
+
 public class UserEntity extends BaseEntity {
 
 	private String name;
+
+	private String username;
 
 	private String password;
 
@@ -34,6 +40,7 @@ public class UserEntity extends BaseEntity {
 
 	private String phoneNumber;
 
+	private String role;
 	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })
@@ -83,6 +90,14 @@ public class UserEntity extends BaseEntity {
 		return address;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	public void setAddress(String address) {
 		this.address = address;
 	}
@@ -103,6 +118,14 @@ public class UserEntity extends BaseEntity {
 		this.phoneNumber = phoneNumber;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	public Set<RoleEntity> getRoles() {
 		return roles;
 	}
@@ -110,5 +133,4 @@ public class UserEntity extends BaseEntity {
 	public void setRoles(Set<RoleEntity> roles) {
 		this.roles = roles;
 	}
-
 }

@@ -27,8 +27,10 @@ public class JpaAuditingConfig {
 		public String getCurrentAuditor() {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			if (authentication == null || !authentication.isAuthenticated()) {
+				System.out.printf("authentication == null " + "JpaAuditingConfig");
 				return null;
 			}
+			System.out.printf("JpaAuditingConfig");
 			return authentication.getName();
 		}
 	}

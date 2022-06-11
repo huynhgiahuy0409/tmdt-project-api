@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -27,8 +28,9 @@ public class JWTRequestFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		System.out.println("Authentication JWTRequestFilter " + SecurityContextHolder.getContext().getAuthentication());
-		Authentication authentication = this.tokenAuthenticationService.getAuthentication(request);
-		SecurityContextHolder.getContext().setAuthentication(authentication);
+//		Authentication authentication = this.tokenAuthenticationService.getAuthentication(request);
+		Authentication authen = new PreAuthenticatedAuthenticationToken("18130094@st.hcmuaf.edu.vn","admin", null);
+		SecurityContextHolder.getContext().setAuthentication(authen);
 		filterChain.doFilter(request, response);
 	}
 
