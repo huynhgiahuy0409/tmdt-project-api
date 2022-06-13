@@ -31,8 +31,9 @@ public class TokenAuthenticateService implements ITokenAuthenticationService {
 	@Override
 	public String getTokenFromHeader(HttpServletRequest request) {
 		String headerValue = request.getHeader(SystemContance.AUTHORIZATION_KEY_IN_HEADER);
+		System.err.println("JWT" + " " + headerValue + "");
 		if (headerValue != null) {
-			// Token
+			System.err.println("JWT" + " " + StringUtils.trimAllWhitespace(headerValue.replace(SystemContance.TOKEN_PREFIX, "")) + "");
 			return StringUtils.trimAllWhitespace(headerValue.replace(SystemContance.TOKEN_PREFIX, ""));
 		}
 		return null;

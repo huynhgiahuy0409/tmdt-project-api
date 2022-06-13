@@ -8,4 +8,5 @@ public interface IUserService {
     public RegisterAccountRequest checkUsername(RegisterAccountRequest account);
     public UserEntity save(UserEntity userEntity);
     public boolean checkPassword(String userDetailsPassword, String password);
+    public UserEntity findByUsername(String username);
 }

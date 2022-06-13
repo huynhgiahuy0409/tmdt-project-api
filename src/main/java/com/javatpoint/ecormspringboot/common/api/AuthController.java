@@ -1,29 +1,50 @@
 package com.javatpoint.ecormspringboot.common.api;
 
+import com.javatpoint.ecormspringboot.common.dto.JWTDTO;
+import com.javatpoint.ecormspringboot.common.dto.UserDTO;
 import com.javatpoint.ecormspringboot.common.entity.JWTEntity;
+import com.javatpoint.ecormspringboot.common.entity.UserEntity;
 import com.javatpoint.ecormspringboot.common.request.AuthenticationRequest;
 import com.javatpoint.ecormspringboot.common.request.RegisterAccountRequest;
+import com.javatpoint.ecormspringboot.common.service.IJWTService;
+import com.javatpoint.ecormspringboot.common.service.ITokenAuthenticationService;
 import com.javatpoint.ecormspringboot.common.service.IUserService;
 import com.javatpoint.ecormspringboot.common.service.imp.CustomUserDetailsService;
 import com.javatpoint.ecormspringboot.common.util.JWTUtil;
+import com.javatpoint.ecormspringboot.response.AuthenticationResponse;
+import com.nimbusds.jwt.JWT;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 @RestController
 @RequestMapping(value = "/api")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AuthController {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
     @Autowired
     private JWTUtil jwtUtil;
-
+    @Autowired
+    private IJWTService jwtService;
     @Autowired
     private IUserService userService;
+    @Autowired
+    private ModelMapper modelMapper;
+    @Autowired
+    private ITokenAuthenticationService tokenAuthenticationService;
+
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationRequest> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest){
         UserDetails userDetail = null;
@@ -43,16 +64,69 @@ public class AuthController {
     public ResponseEntity login(@RequestBody AuthenticationRequest authenticationRequest){
         UserDetails userDetails = null;
         userDetails = this.customUserDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-        System.out.printf(this.userService.checkPassword(userDetails.getUsername(), authenticationRequest.getUsername()) + "");
-        if(userDetails != null && this.userService.checkPassword(userDetails.getUsername(), authenticationRequest.getUsername())){
-            String token = this.jwtUtil.generateToken(userDetails);
-            System.out.printf(token + "");
-            JWTEntity jwtEntity = new JWTEntity();
-            jwtEntity.setToken(token);
-            jwtEntity.setTokenExpirationDate(this.jwtUtil.getExpirationDateFromToken(token));
-            this.tokenService.saveToken(jwtEntity);
-            return null;
+        if(userDetails != null && this.userService.checkPassword(userDetails.getPassword(), authenticationRequest.getPassword())){
+            String accessToken = this.jwtUtil.generateToken(userDetails, "access");
+            String refreshToken = this.jwtUtil.generateToken(userDetails, "refresh");
+            JWTEntity refreshJWTEntity = new JWTEntity();
+            refreshJWTEntity.setToken(refreshToken);
+            refreshJWTEntity.setTokenExpirationDate(this.jwtUtil.getExpirationDateFromToken(refreshToken));
+            JWTEntity accessJWTEntity = new JWTEntity();
+            accessJWTEntity.setToken(refreshToken);
+            accessJWTEntity.setTokenExpirationDate(this.jwtUtil.getExpirationDateFromToken(accessToken));
+            this.jwtService.save(refreshJWTEntity);
+            UserEntity userEntity = this.userService.findByUsername(authenticationRequest.getUsername());
+            UserDTO userDTO = this.modelMapper.map(userEntity, UserDTO.class);
+            JWTDTO accessJWTDTO  = this.modelMapper.map(accessJWTEntity, JWTDTO.class);
+            JWTDTO refreshJWTDTO = this.modelMapper.map(refreshJWTEntity, JWTDTO.class);
+            return ResponseEntity.ok(new AuthenticationResponse(userDTO, accessJWTDTO, refreshJWTDTO));
         }
         return null;
+    }
+
+    @GetMapping("/refresh-access-token")
+    public ResponseEntity<AuthenticationResponse> refreshAccessToken(HttpServletRequest request){
+        String refreshToken = this.tokenAuthenticationService.getTokenFromHeader(request);
+        JWTEntity foundRefreshToken = this.jwtService.findByToken(refreshToken);
+        if(foundRefreshToken != null){
+            String username = SecurityContextHolder.getContext().getAuthentication().getName();
+            UserDetails userDetails = this.customUserDetailsService.loadUserByUsername(username);
+            UserEntity userEntity = this.userService.findByUsername(username);
+            String newRefreshToken = this.jwtUtil.generateToken(userDetails,"refresh");
+            String newAccessToken = this.jwtUtil.generateToken(userDetails,"access");
+            Date expiredNewRefreshToken = this.jwtUtil.getExpirationDateFromToken(newRefreshToken);
+            Date expiredNewAccessToken = this.jwtUtil.getExpirationDateFromToken(newAccessToken);
+            foundRefreshToken.setToken(newRefreshToken);
+            foundRefreshToken.setTokenExpirationDate(expiredNewRefreshToken);
+            this.jwtService.save(foundRefreshToken);
+            JWTEntity newAccessTokenEntity = new JWTEntity();
+            newAccessTokenEntity.setToken(newAccessToken);
+            newAccessTokenEntity.setTokenExpirationDate(expiredNewAccessToken);
+            UserDTO userDTO = this.modelMapper.map(userEntity, UserDTO.class);
+            return ResponseEntity.ok(new AuthenticationResponse(userDTO, this.modelMapper.map(newAccessTokenEntity, JWTDTO.class),this.modelMapper.map(foundRefreshToken, JWTDTO.class)));
+        }
+        return null;
+    }
+    @GetMapping(value = "/revoke-token")
+    public Long revokeToken(HttpServletRequest request) {
+        String token = this.tokenAuthenticationService.getTokenFromHeader(request);
+        Long recordId = this.jwtService.removeByToken(token);
+        System.out.println(recordId);
+        if(recordId != null && recordId.longValue() != -1){
+            return recordId.longValue();
+        }else{
+            return new Long(-1).longValue();
+        }
+    }
+    @GetMapping(value = "/check-user")
+    public ResponseEntity<Boolean> checkUser(@RequestParam String username){
+        System.out.println(username);
+        if (!StringUtils.isEmpty(username)){
+            UserEntity foundUser = this.userService.findByUsername(username);
+            if(foundUser != null){
+                return ResponseEntity.ok(true);
+            }
+            return ResponseEntity.ok(false);
+        }
+        return ResponseEntity.ok(false);
     }
 }

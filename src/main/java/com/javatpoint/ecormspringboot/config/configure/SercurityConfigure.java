@@ -1,5 +1,6 @@
 package com.javatpoint.ecormspringboot.config.configure;
 
+import com.javatpoint.ecormspringboot.common.service.imp.CustomUserDetailsService;
 import com.javatpoint.ecormspringboot.common.service.imp.UserService;
 import com.javatpoint.ecormspringboot.config.filter.JWTRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,7 @@ public class SercurityConfigure extends WebSecurityConfigurerAdapter {
 //				.exceptionHandling()
 //				.authenticationEntryPoint(unauthorizedHandler);
 //
-//		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
 	}
 	@Bean

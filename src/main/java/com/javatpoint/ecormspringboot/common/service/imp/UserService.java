@@ -47,4 +47,9 @@ public class UserService implements IUserService {
         boolean isMatch = this.passwordEncoder.matches(password, userDetailsPassword);
         return isMatch;
     }
+
+    @Override
+    public UserEntity findByUsername(String username) {
+        return this.userRepository.findByUsername(username);
+    }
 }

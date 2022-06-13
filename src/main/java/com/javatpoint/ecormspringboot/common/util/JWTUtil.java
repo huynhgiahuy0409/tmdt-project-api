@@ -26,7 +26,7 @@ import io.jsonwebtoken.UnsupportedJwtException;
 @Service
 public class JWTUtil {
 
-	public String generateToken(UserDetails userDetails) {
+	public String generateToken(UserDetails userDetails, String type) {
 		Map<String, Object> claims = new HashMap<>();
 		Collection<? extends GrantedAuthority> roles = userDetails.getAuthorities();
 		if (roles.contains(new SimpleGrantedAuthority("CUSTOMER"))) {
@@ -35,13 +35,20 @@ public class JWTUtil {
 		if (roles.contains(new SimpleGrantedAuthority("SUPPER USER"))) {
 			claims.put("isSUPPERUSER", true);
 		}
-		return doGenerateToken(claims, userDetails.getUsername());
+		return doGenerateToken(claims, userDetails.getUsername(), type);
 	}
 
-	private String doGenerateToken(Map<String, Object> claims, String subject) {
+	private String doGenerateToken(Map<String, Object> claims, String subject, String type) {
 		System.out.println("JwtUtil doGenerateToken");
+		if(type == "access"){
+			return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+					.setExpiration(new Date(System.currentTimeMillis() + SystemContance.EXPIRATION_TIME))
+					.signWith(SignatureAlgorithm.HS512, SystemContance.SECREC).compact();
+		}else{
+
+		}
 		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + SystemContance.EXPIRATION_TIME))
+				.setExpiration(new Date(System.currentTimeMillis() + SystemContance.EXPIRATION_TIME + SystemContance.REFRESH_TIME))
 				.signWith(SignatureAlgorithm.HS512, SystemContance.SECREC).compact();
 	}
 

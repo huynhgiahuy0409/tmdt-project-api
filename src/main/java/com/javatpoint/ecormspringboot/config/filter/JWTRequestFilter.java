@@ -27,10 +27,10 @@ public class JWTRequestFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		System.out.println("Authentication JWTRequestFilter " + SecurityContextHolder.getContext().getAuthentication());
-//		Authentication authentication = this.tokenAuthenticationService.getAuthentication(request);
-		Authentication authen = new PreAuthenticatedAuthenticationToken("18130094@st.hcmuaf.edu.vn","admin", null);
-		SecurityContextHolder.getContext().setAuthentication(authen);
+		Authentication authentication = this.tokenAuthenticationService.getAuthentication(request);
+		if(authentication != null){
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+		}
 		filterChain.doFilter(request, response);
 	}
 
