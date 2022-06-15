@@ -2,6 +2,7 @@ package com.javatpoint.ecormspringboot.config.configure;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -25,7 +26,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
-
+	@Value("${FilePath}")
+	private String imagePath;
 	@Override
 	public void addCorsMappings(CorsRegistry corsRegistry) {
 		corsRegistry.addMapping("/*").allowedOrigins("http://localhost:4200").allowedMethods("*").allowedHeaders("*")
@@ -71,7 +73,7 @@ public class WebConfig implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		// TODO Auto-generated method stub
-
+		registry.addResourceHandler("/images/**").addResourceLocations("file:" + imagePath);
 	}
 
 	@Override

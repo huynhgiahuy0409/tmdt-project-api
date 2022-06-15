@@ -5,4 +5,5 @@ import com.javatpoint.ecormspringboot.common.entity.BrandEntity;
 
 public interface IBrandService{
 	public BrandEntity addBrand(BrandDTO aBrand);
+	public BrandEntity findByCode(String code);
 }

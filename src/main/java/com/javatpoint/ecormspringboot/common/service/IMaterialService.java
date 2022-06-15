@@ -5,4 +5,5 @@ import com.javatpoint.ecormspringboot.common.entity.MaterialEntity;
 
 public interface IMaterialService {
 	public MaterialEntity addMaterial(MaterialDTO material);
+	public MaterialEntity findByCode(String code);
 }

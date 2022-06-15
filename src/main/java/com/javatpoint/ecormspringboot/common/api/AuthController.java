@@ -5,6 +5,7 @@ import com.javatpoint.ecormspringboot.common.dto.UserDTO;
 import com.javatpoint.ecormspringboot.common.entity.JWTEntity;
 import com.javatpoint.ecormspringboot.common.entity.UserEntity;
 import com.javatpoint.ecormspringboot.common.request.AuthenticationRequest;
+import com.javatpoint.ecormspringboot.common.request.ReAccountRequest;
 import com.javatpoint.ecormspringboot.common.request.RegisterAccountRequest;
 import com.javatpoint.ecormspringboot.common.service.IJWTService;
 import com.javatpoint.ecormspringboot.common.service.ITokenAuthenticationService;
@@ -12,20 +13,15 @@ import com.javatpoint.ecormspringboot.common.service.IUserService;
 import com.javatpoint.ecormspringboot.common.service.imp.CustomUserDetailsService;
 import com.javatpoint.ecormspringboot.common.util.JWTUtil;
 import com.javatpoint.ecormspringboot.response.AuthenticationResponse;
-import com.nimbusds.jwt.JWT;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
 @RestController
@@ -128,5 +124,10 @@ public class AuthController {
             return ResponseEntity.ok(false);
         }
         return ResponseEntity.ok(false);
+    }
+    @PostMapping(value = "/reset-password")
+    public ResponseEntity<Boolean> resetPassoword(@RequestBody(required = true) ReAccountRequest reAccount){
+       this.userService.resetPassword(reAccount.getUsername(), reAccount.getNewPassword());
+        return ResponseEntity.ok(true);
     }
 }

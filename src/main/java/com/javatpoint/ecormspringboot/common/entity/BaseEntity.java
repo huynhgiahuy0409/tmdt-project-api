@@ -75,9 +75,5 @@ public abstract class BaseEntity {
 		this.modifiedDate = modifiedDate;
 	}
 
-	@Override
-	public String toString() {
-		return "BaseEntity [id=" + id + "]";
-	}
 
 }

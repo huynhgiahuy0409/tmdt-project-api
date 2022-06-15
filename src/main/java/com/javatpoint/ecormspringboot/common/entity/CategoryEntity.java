@@ -15,7 +15,7 @@ public class CategoryEntity extends BaseEntity {
 	private String name;
 	private String code;
 
-	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "category")
 	private Set<ProductEntity> products = new HashSet<ProductEntity>();
 
 	public String getName() {
@@ -42,9 +42,5 @@ public class CategoryEntity extends BaseEntity {
 		this.products = products;
 	}
 
-	@Override
-	public String toString() {
-		return "CategoryEntity [name=" + name + ", code=" + code + ", products=" + products + "]";
-	}
 
 }

@@ -9,4 +9,6 @@ public interface ICategoryService {
 	public CategoryEntity save(CategoryDTO category);
 
 	public List<CategoryEntity> findAll();
+
+	public CategoryEntity findByCode(String code);
 }

@@ -9,12 +9,21 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "size")
 public class SizeEntity extends BaseEntity {
+	private double weight;
 	private double length;
 	private double width;
 	private double height;
 
-	@OneToOne(mappedBy = "size", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(mappedBy = "size")
 	private ProductEntity product;
+
+	public double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
 
 	public double getLength() {
 		return length;
@@ -40,4 +49,11 @@ public class SizeEntity extends BaseEntity {
 		this.height = height;
 	}
 
+	public ProductEntity getProduct() {
+		return product;
+	}
+
+	public void setProduct(ProductEntity product) {
+		this.product = product;
+	}
 }

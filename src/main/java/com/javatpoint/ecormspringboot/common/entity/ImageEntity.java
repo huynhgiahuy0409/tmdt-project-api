@@ -13,12 +13,16 @@ import javax.persistence.Table;
 public class ImageEntity extends BaseEntity {
 	private String url;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private ProductEntity product;
 
 	@OneToOne(mappedBy = "avatar")
 	private ShopEntity shop;
+
+	@OneToOne
+	@JoinColumn(name = "brand_id")
+	private BrandEntity brand;
 
 	public String getUrl() {
 		return url;
@@ -43,5 +47,14 @@ public class ImageEntity extends BaseEntity {
 	public void setShop(ShopEntity shop) {
 		this.shop = shop;
 	}
+
+	public BrandEntity getBrand() {
+		return brand;
+	}
+
+	public void setBrand(BrandEntity brand) {
+		this.brand = brand;
+	}
+
 
 }

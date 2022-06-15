@@ -24,4 +24,9 @@ public class MaterialService implements IMaterialService {
 		return this.materialRepository.saveAndFlush(this.om.map(material, MaterialEntity.class));
 	}
 
+	@Override
+	public MaterialEntity findByCode(String code) {
+		return this.materialRepository.findByCode(code);
+	}
+
 }

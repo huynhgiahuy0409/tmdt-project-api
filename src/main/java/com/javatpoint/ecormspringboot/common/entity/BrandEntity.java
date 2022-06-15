@@ -1,54 +1,60 @@
 package com.javatpoint.ecormspringboot.common.entity;
 
-import java.util.Set;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "brand")
-public class BrandEntity extends BaseEntity {
-	private String name;
-	private String code;
-	private String status;
+public class BrandEntity extends  BaseEntity{
+    private String name;
+    private String code;
+    private String status;
 
-	@OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<ProductEntity> producst;
+    @OneToMany(mappedBy = "brand")
+    private Set<ProductEntity> products;
 
-	public String getName() {
-		return name;
-	}
+    @OneToOne(mappedBy = "brand")
+    private ImageEntity logo;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getCode() {
-		return code;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public Set<ProductEntity> getProducst() {
-		return producst;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	public void setProducst(Set<ProductEntity> producst) {
-		this.producst = producst;
-	}
+    public Set<ProductEntity> getProducts() {
+        return products;
+    }
 
+    public void setProducts(Set<ProductEntity> products) {
+        this.products = products;
+    }
 
+    public ImageEntity getLogo() {
+        return logo;
+    }
+
+    public void setLogo(ImageEntity logo) {
+        this.logo = logo;
+    }
 }

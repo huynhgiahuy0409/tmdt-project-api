@@ -30,4 +30,9 @@ public class CategoryService implements ICategoryService {
 		// TODO Auto-generated method stub
 		return this.categoryRepository.findAll();
 	}
+
+	@Override
+	public CategoryEntity findByCode(String code) {
+		return this.categoryRepository.findByCode(code);
+	}
 }

@@ -8,7 +8,13 @@ import com.javatpoint.ecormspringboot.common.entity.ProductEntity;
 public class CategoryDTO {
 	private String name;
 	private String code;
-	private Set<ProductEntity> products = new HashSet<ProductEntity>();
+
+	public CategoryDTO(String name, String code) {
+		this.name = name;
+		this.code = code;
+	}
+	public CategoryDTO() {
+	}
 
 	public String getName() {
 		return name;
@@ -25,13 +31,4 @@ public class CategoryDTO {
 	public void setCode(String code) {
 		this.code = code;
 	}
-
-	public Set<ProductEntity> getProducts() {
-		return products;
-	}
-
-	public void setProducts(Set<ProductEntity> products) {
-		this.products = products;
-	}
-
 }

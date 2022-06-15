@@ -1,10 +1,7 @@
 package com.javatpoint.ecormspringboot.common.entity;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "material")
@@ -12,8 +9,8 @@ public class MaterialEntity extends BaseEntity {
 	private String name;
 	private String code;
 
-	@OneToOne(mappedBy = "material", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private ProductEntity product;
+	@OneToMany(mappedBy = "material")
+	private Set<ProductEntity> products;
 
 	public String getName() {
 		return name;
@@ -31,4 +28,11 @@ public class MaterialEntity extends BaseEntity {
 		this.code = code;
 	}
 
+	public Set<ProductEntity> getProducts() {
+		return products;
+	}
+
+	public void setProducts(Set<ProductEntity> products) {
+		this.products = products;
+	}
 }

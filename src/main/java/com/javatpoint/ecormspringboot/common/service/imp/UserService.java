@@ -52,4 +52,12 @@ public class UserService implements IUserService {
     public UserEntity findByUsername(String username) {
         return this.userRepository.findByUsername(username);
     }
+
+    @Override
+    public UserEntity resetPassword(String username, String newPassword) {
+        UserEntity user = this.userRepository.findByUsername(username);
+        user.setPassword(this.passwordEncoder.encode(newPassword));
+        return this.userRepository.save(user);
+    }
+
 }

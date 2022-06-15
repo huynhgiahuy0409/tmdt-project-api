@@ -29,8 +29,5 @@ public class JWTEntity extends BaseEntity {
         this.tokenExpirationDate = tokenExpirationDate;
     }
 
-    @Override
-    public String toString() {
-        return "TokenEntity [token=" + token + ", tokenExpirationDate=" + tokenExpirationDate + "]";
-    }
+
 }

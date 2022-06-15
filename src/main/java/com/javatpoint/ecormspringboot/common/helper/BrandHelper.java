@@ -1,12 +1,12 @@
 package com.javatpoint.ecormspringboot.common.helper;
 
+import com.javatpoint.ecormspringboot.common.entity.BrandEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.javatpoint.ecormspringboot.common.dto.BrandDTO;
-import com.javatpoint.ecormspringboot.common.entity.BrandEntity;
 import com.javatpoint.ecormspringboot.common.service.IBrandService;
 import com.javatpoint.ecormspringboot.common.util.ObjectMapperUtils;
 
