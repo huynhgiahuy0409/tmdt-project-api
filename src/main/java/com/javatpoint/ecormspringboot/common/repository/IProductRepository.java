@@ -4,4 +4,5 @@ import com.javatpoint.ecormspringboot.common.entity.ProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IProductRepository extends JpaRepository<ProductEntity, Long> {
+    ProductEntity findById(long id);
 }

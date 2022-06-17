@@ -9,6 +9,8 @@ import com.javatpoint.ecormspringboot.common.dto.BrandDTO;
 import com.javatpoint.ecormspringboot.common.repository.IBrandRepository;
 import com.javatpoint.ecormspringboot.common.service.IBrandService;
 
+import java.util.List;
+
 @Service
 public class BrandService implements IBrandService {
 	@Autowired
@@ -25,6 +27,11 @@ public class BrandService implements IBrandService {
 	@Override
 	public BrandEntity findByCode(String code) {
 		return this.brandRepository.findByCode(code);
+	}
+
+	@Override
+	public List<BrandEntity> findAll() {
+		return this.brandRepository.findAll();
 	}
 
 }

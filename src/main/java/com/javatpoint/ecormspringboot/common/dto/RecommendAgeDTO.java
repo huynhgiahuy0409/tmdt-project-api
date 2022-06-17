@@ -6,6 +6,6 @@ import lombok.RequiredArgsConstructor;
 @Data
 @RequiredArgsConstructor
 public class RecommendAgeDTO {
-	private String range;
+	private String name;
 	private String code;
 }

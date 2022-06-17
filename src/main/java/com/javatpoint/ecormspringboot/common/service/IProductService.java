@@ -9,4 +9,6 @@ import java.util.List;
 public interface IProductService {
     public List<ProductDTO> findAll(Pageable pageable);
     public ProductEntity save(ProductEntity productEntity);
+    public ProductEntity findById(long id);
+    public ProductEntity saveAndFlush(ProductEntity productEntity);
 }

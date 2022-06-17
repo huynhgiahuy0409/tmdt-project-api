@@ -30,7 +30,6 @@ public class CategoryHelper {
 
 	public ResponseEntity<List<CategoryDTO>> findAll() {
 		List<CategoryEntity> categories = this.categorySerivce.findAll();
-		System.out.println(categories);
 		List<CategoryDTO> result = this.om.mapAll(categories, CategoryDTO.class);
 		return ResponseEntity.ok(result);
 	}

@@ -6,11 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "coupon")
+@Table(name = "origin")
 @Data
-public class CouponEntity extends BaseEntity {
-	private String name;
-	private String code;
-	private double value;
-
+public class OriginEntity extends BaseEntity{
+    String name;
+    String code;
 }

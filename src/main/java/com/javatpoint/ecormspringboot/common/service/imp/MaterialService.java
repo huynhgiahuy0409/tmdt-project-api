@@ -9,6 +9,8 @@ import com.javatpoint.ecormspringboot.common.repository.IMaterialRepository;
 import com.javatpoint.ecormspringboot.common.service.IMaterialService;
 import com.javatpoint.ecormspringboot.common.util.ObjectMapperUtils;
 
+import java.util.List;
+
 @Service
 public class MaterialService implements IMaterialService {
 
@@ -27,6 +29,11 @@ public class MaterialService implements IMaterialService {
 	@Override
 	public MaterialEntity findByCode(String code) {
 		return this.materialRepository.findByCode(code);
+	}
+
+	@Override
+	public List<MaterialEntity> findAll() {
+		return this.materialRepository.findAll();
 	}
 
 }

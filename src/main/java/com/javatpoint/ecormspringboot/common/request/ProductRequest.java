@@ -1,35 +1,23 @@
 package com.javatpoint.ecormspringboot.common.request;
 
+import com.javatpoint.ecormspringboot.common.dto.SizeDTO;
+import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+@Data
 public class ProductRequest {
-    private MultipartFile files;
-    private String model;
-
-
-    public MultipartFile getFiles() {
-        return files;
-    }
-
-    public void setFiles(MultipartFile files) {
-        this.files = files;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    @Override
-    public String toString() {
-        return "ProductRequest{" +
-                "files=" + files +
-                ", model='" + model + '\'' +
-                '}';
-    }
-
+    private String name;
+    private String SKU;
+    private String description;
+    private double sourcePrice;
+    private double discountPercent;
+    private int repository;
+    private SizeDTO size;
+    private String originCode;
+    private String statusCode;
+    private String categoryCode;
+    private String materialCode;
+    private String brandCode;
+    private String recommendAgeCode;
 
 }

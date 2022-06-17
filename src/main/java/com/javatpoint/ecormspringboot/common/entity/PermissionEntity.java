@@ -1,5 +1,7 @@
 package com.javatpoint.ecormspringboot.common.entity;
 
+import lombok.Data;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,6 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "permission")
+@Data
 public class PermissionEntity extends BaseEntity {
 	private String name;
 
@@ -17,28 +20,5 @@ public class PermissionEntity extends BaseEntity {
 	@ManyToMany(mappedBy = "permissions")
 	private Set<RoleEntity> roles = new HashSet<RoleEntity>();
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public Set<RoleEntity> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<RoleEntity> roles) {
-		this.roles = roles;
-	}
 
 }

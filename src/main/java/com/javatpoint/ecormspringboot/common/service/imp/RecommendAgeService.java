@@ -9,6 +9,8 @@ import com.javatpoint.ecormspringboot.common.repository.IRecommendAgeRepository;
 import com.javatpoint.ecormspringboot.common.service.IRecommendAgeService;
 import com.javatpoint.ecormspringboot.common.util.ObjectMapperUtils;
 
+import java.util.List;
+
 @Service
 public class RecommendAgeService implements IRecommendAgeService {
 
@@ -26,6 +28,11 @@ public class RecommendAgeService implements IRecommendAgeService {
 	@Override
 	public RecommendAgeEntity findByCode(String code) {
 		return this.recommendAgeRepository.findByCode(code);
+	}
+
+	@Override
+	public List<RecommendAgeEntity> findAll() {
+		return this.recommendAgeRepository.findAll();
 	}
 
 }

@@ -32,5 +32,14 @@ public class ProductService implements IProductService {
         return this.productRepository.save(productEntity);
     }
 
+    @Override
+    public ProductEntity findById(long id) {
+        return this.productRepository.findById(id);
+    }
+
+    @Override
+    public ProductEntity saveAndFlush(ProductEntity productEntity) {
+        return this.productRepository.saveAndFlush(productEntity);
+    }
 
 }
