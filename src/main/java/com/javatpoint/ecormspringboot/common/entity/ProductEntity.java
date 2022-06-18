@@ -24,6 +24,7 @@ public class ProductEntity extends BaseEntity {
 	private String description;
 	private double sourcePrice;
 	private double discountPercent;
+	private double buyPrice;
 	private int repository;
 
 	@Column(name = "origin")

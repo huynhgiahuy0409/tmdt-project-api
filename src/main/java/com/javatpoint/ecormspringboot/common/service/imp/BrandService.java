@@ -3,6 +3,7 @@ package com.javatpoint.ecormspringboot.common.service.imp;
 import com.javatpoint.ecormspringboot.common.entity.BrandEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.javatpoint.ecormspringboot.common.dto.BrandDTO;
@@ -32,6 +33,11 @@ public class BrandService implements IBrandService {
 	@Override
 	public List<BrandEntity> findAll() {
 		return this.brandRepository.findAll();
+	}
+
+	@Override
+	public List<BrandEntity> findAll(Pageable pageable) {
+		return this.brandRepository.findAll(pageable).getContent();
 	}
 
 }

@@ -9,17 +9,20 @@ import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 @Data
 public class ProductDTO {
     private Long id;
+    Date createdDate;
     private String name;
     private String SKU;
     private String description;
     private double sourcePrice;
     private double discountPercent;
+    private double buyPrice;
     private int repository;
     private OriginDTO origin;
     private StatusDTO status;

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.javatpoint.ecormspringboot.common.dto.CategoryDTO;
@@ -34,5 +35,10 @@ public class CategoryService implements ICategoryService {
 	@Override
 	public CategoryEntity findByCode(String code) {
 		return this.categoryRepository.findByCode(code);
+	}
+
+	@Override
+	public List<CategoryEntity> findAll(Pageable pageable) {
+		return this.categoryRepository.findAll(pageable).getContent();
 	}
 }

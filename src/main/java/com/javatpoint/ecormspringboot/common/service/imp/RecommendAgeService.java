@@ -2,6 +2,7 @@ package com.javatpoint.ecormspringboot.common.service.imp;
 
 import com.javatpoint.ecormspringboot.common.entity.RecommendAgeEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.javatpoint.ecormspringboot.common.dto.RecommendAgeDTO;
@@ -33,6 +34,11 @@ public class RecommendAgeService implements IRecommendAgeService {
 	@Override
 	public List<RecommendAgeEntity> findAll() {
 		return this.recommendAgeRepository.findAll();
+	}
+
+	@Override
+	public List<RecommendAgeEntity> findAll(Pageable pageable) {
+		return this.recommendAgeRepository.findAll(pageable).getContent();
 	}
 
 }

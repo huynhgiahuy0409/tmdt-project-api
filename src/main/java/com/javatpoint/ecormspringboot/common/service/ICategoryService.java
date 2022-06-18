@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.javatpoint.ecormspringboot.common.dto.CategoryDTO;
 import com.javatpoint.ecormspringboot.common.entity.CategoryEntity;
+import org.springframework.data.domain.Pageable;
 
 public interface ICategoryService {
 	public CategoryEntity save(CategoryDTO category);
@@ -11,4 +12,6 @@ public interface ICategoryService {
 	public List<CategoryEntity> findAll();
 
 	public CategoryEntity findByCode(String code);
+
+	public List<CategoryEntity> findAll(Pageable pageable);
 }
