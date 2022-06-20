@@ -1,6 +1,8 @@
 package com.javatpoint.ecormspringboot.common.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,7 +17,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "role")
-@Data
+@Getter
+@Setter
 public class RoleEntity extends BaseEntity {
 	private String code;
 

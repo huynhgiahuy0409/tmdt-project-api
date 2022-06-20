@@ -60,4 +60,9 @@ public class UserService implements IUserService {
         return this.userRepository.save(user);
     }
 
+    @Override
+    public UserEntity findById(long id) {
+        return this.userRepository.findOne(id);
+    }
+
 }

@@ -27,9 +27,10 @@ public class ProductEntity extends BaseEntity {
 	private double buyPrice;
 	private int repository;
 
-	@Column(name = "origin")
+	@ManyToOne
+	@JoinColumn(name = "origin_id")
 	@Nationalized
-	private String origin;
+	private OriginEntity origin;
 
 	@ManyToOne
 	@JoinColumn(name = "status_id")
@@ -59,4 +60,6 @@ public class ProductEntity extends BaseEntity {
 	@JoinColumn(name = "recommend_id")
 	private RecommendAgeEntity recommend;
 
+	@OneToMany(mappedBy = "product", cascade = {CascadeType.REMOVE,CascadeType.REFRESH})
+	private Set<PendingItemEntity> pendingItems= new HashSet<PendingItemEntity>();
 }

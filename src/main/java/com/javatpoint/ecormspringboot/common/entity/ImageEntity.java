@@ -1,6 +1,8 @@
 package com.javatpoint.ecormspringboot.common.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -12,7 +14,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "image")
-@Data
+@Getter
+@Setter
 public class ImageEntity extends BaseEntity {
 	private String url;
 

@@ -20,7 +20,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "user")
-@Data
+@Getter
+@Setter
 public class UserEntity extends BaseEntity {
 
 	private String name;
@@ -35,17 +36,20 @@ public class UserEntity extends BaseEntity {
 
 	private String gender;
 
-	private String address;
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Set<AddressEntity> addresses;
 
 	private String email;
 
 	private String phoneNumber;
 
 	private String role;
+
 	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })
 	private Set<RoleEntity> roles = new HashSet<RoleEntity>();
 
-
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private CartEntity cart;
 }

@@ -11,4 +11,5 @@ public interface IUserService {
     public boolean checkPassword(String userDetailsPassword, String password);
     public UserEntity findByUsername(String username);
     public UserEntity resetPassword(String username, String newPassword);
+    public UserEntity findById(long id);
 }

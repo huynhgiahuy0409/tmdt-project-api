@@ -1,6 +1,8 @@
 package com.javatpoint.ecormspringboot.common.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -8,7 +10,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "status")
-@Data
+@Getter
+@Setter
 public class StatusEntity extends BaseEntity{
     private String name;
     private String code;

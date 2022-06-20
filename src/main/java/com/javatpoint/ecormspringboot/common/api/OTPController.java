@@ -1,5 +1,6 @@
 package com.javatpoint.ecormspringboot.common.api;
 
+import com.javatpoint.ecormspringboot.common.entity.CartEntity;
 import com.javatpoint.ecormspringboot.common.entity.UserEntity;
 import com.javatpoint.ecormspringboot.common.model.EmailTemplate;
 import com.javatpoint.ecormspringboot.common.request.RegisterAccountRequest;
@@ -63,7 +64,10 @@ public class OTPController {
                     userEntity.setUsername(registerAccountRequest.getUsername());
                     userEntity.setPassword(this.passwordEncoder.encode(registerAccountRequest.getPassword()));
                     userEntity.setFullName(registerAccountRequest.getFullName());
-                    this.userService.save(userEntity);
+                    CartEntity cartEntity = new CartEntity();
+                    cartEntity.setUser(userEntity);
+                    userEntity.setCart(cartEntity);
+                    UserEntity savedUserEntity = this.userService.save(userEntity);
                     return isValid;
                 }
                 else {

@@ -1,6 +1,8 @@
 package com.javatpoint.ecormspringboot.common.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,7 +13,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "permission")
-@Data
+@Getter
+@Setter
 public class PermissionEntity extends BaseEntity {
 	private String name;
 
