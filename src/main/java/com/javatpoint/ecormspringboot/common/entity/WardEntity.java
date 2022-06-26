@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "ward")
@@ -23,4 +25,7 @@ public class WardEntity extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "_district_id")
     private DistrictEntity district;
+
+    @OneToMany(mappedBy = "ward", cascade = {CascadeType.REMOVE})
+    private Set<AddressEntity> addresses = new HashSet<AddressEntity>();
 }

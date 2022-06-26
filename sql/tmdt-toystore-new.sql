@@ -11,11 +11,44 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 21/06/2022 03:57:29
+ Date: 26/06/2022 16:40:37
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for address
+-- ----------------------------
+DROP TABLE IF EXISTS `address`;
+CREATE TABLE `address`  (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `created_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `created_date` datetime NULL DEFAULT NULL,
+  `modified_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `modified_date` datetime NULL DEFAULT NULL,
+  `detail_address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `user_id` bigint NULL DEFAULT NULL,
+  `full_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `district_id` bigint NULL DEFAULT NULL,
+  `province_id` bigint NULL DEFAULT NULL,
+  `ward_id` bigint NULL DEFAULT NULL,
+  `phone_number` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `status` bigint NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `FKda8tuywtf0gb6sedwk7la1pgi`(`user_id` ASC) USING BTREE,
+  INDEX `FKqbjwfi50pdenou8j14knnffrh`(`district_id` ASC) USING BTREE,
+  INDEX `FKf8x0jfwoo94op8u88og1ohdcn`(`province_id` ASC) USING BTREE,
+  INDEX `FKq7vspx6bqxq5lawbv2calw5lb`(`ward_id` ASC) USING BTREE,
+  CONSTRAINT `FKda8tuywtf0gb6sedwk7la1pgi` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FKf8x0jfwoo94op8u88og1ohdcn` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FKq7vspx6bqxq5lawbv2calw5lb` FOREIGN KEY (`ward_id`) REFERENCES `ward` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FKqbjwfi50pdenou8j14knnffrh` FOREIGN KEY (`district_id`) REFERENCES `district` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of address
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for brand
@@ -58,12 +91,40 @@ CREATE TABLE `cart`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `FKl70asp4l4w0jmbm1tqyofho4o`(`user_id` ASC) USING BTREE,
   CONSTRAINT `FKl70asp4l4w0jmbm1tqyofho4o` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of cart
 -- ----------------------------
-INSERT INTO `cart` VALUES (4, 'anonymousUser', '2022-06-19 00:17:41', 'anonymousUser', '2022-06-19 00:17:41', 5);
+INSERT INTO `cart` VALUES (9, 'anonymousUser', '2022-06-24 15:58:09', 'anonymousUser', '2022-06-24 15:58:09', 10);
+INSERT INTO `cart` VALUES (10, NULL, '2022-06-25 16:25:43', NULL, '2022-06-25 16:25:43', 11);
+
+-- ----------------------------
+-- Table structure for cart_item
+-- ----------------------------
+DROP TABLE IF EXISTS `cart_item`;
+CREATE TABLE `cart_item`  (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `created_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `created_date` datetime NULL DEFAULT NULL,
+  `modified_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `modified_date` datetime NULL DEFAULT NULL,
+  `cart_id` bigint NULL DEFAULT NULL,
+  `shop_id` bigint NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `FK1uobyhgl1wvgt1jpccia8xxs3`(`cart_id` ASC) USING BTREE,
+  INDEX `FKhwh0dbrjno0errtmdfmm6mj8m`(`shop_id` ASC) USING BTREE,
+  CONSTRAINT `FK1uobyhgl1wvgt1jpccia8xxs3` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FKhwh0dbrjno0errtmdfmm6mj8m` FOREIGN KEY (`shop_id`) REFERENCES `shop` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of cart_item
+-- ----------------------------
+INSERT INTO `cart_item` VALUES (5, 'anonymousUser', '2022-06-25 15:50:57', 'anonymousUser', '2022-06-25 15:50:57', 9, 3);
+INSERT INTO `cart_item` VALUES (6, 'anonymousUser', '2022-06-25 16:28:04', 'anonymousUser', '2022-06-25 16:28:04', 9, 4);
+INSERT INTO `cart_item` VALUES (7, 'anonymousUser', '2022-06-25 16:28:34', 'anonymousUser', '2022-06-25 16:28:34', 10, 4);
+INSERT INTO `cart_item` VALUES (8, 'anonymousUser', '2022-06-25 16:57:09', 'anonymousUser', '2022-06-25 16:57:09', 10, 3);
 
 -- ----------------------------
 -- Table structure for category
@@ -871,7 +932,7 @@ CREATE TABLE `image`  (
   INDEX `FKhrkf7ckgs6v4gwyxjd63cs8jg`(`brand_id` ASC) USING BTREE,
   CONSTRAINT `FKgpextbyee3uk9u6o2381m7ft1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FKhrkf7ckgs6v4gwyxjd63cs8jg` FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 77 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 103 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of image
@@ -896,6 +957,18 @@ INSERT INTO `image` VALUES (73, 'anonymousUser', '2022-06-17 07:02:49', 'anonymo
 INSERT INTO `image` VALUES (74, 'anonymousUser', '2022-06-17 07:02:49', 'anonymousUser', '2022-06-17 07:02:49', 'ece0e32b-f599-4779-8e60-62cffb0526f6.jpg', NULL, 101);
 INSERT INTO `image` VALUES (75, 'anonymousUser', '2022-06-17 07:02:49', 'anonymousUser', '2022-06-17 07:02:49', 'a5ba7d15-94c8-473a-b3a5-574ca5d2256c.jpg', NULL, 101);
 INSERT INTO `image` VALUES (76, 'anonymousUser', '2022-06-17 07:02:49', 'anonymousUser', '2022-06-17 07:02:49', 'e4fa286e-fc4a-41e1-a3e3-833b9fc46a83.jpg', NULL, 101);
+INSERT INTO `image` VALUES (91, NULL, '2022-06-24 19:26:59', NULL, '2022-06-24 19:26:59', '489a7be1-a61f-4027-8962-ab5d5472ebfe.jpg', NULL, 107);
+INSERT INTO `image` VALUES (92, NULL, '2022-06-24 19:26:59', NULL, '2022-06-24 19:26:59', 'a8ea7833-94b4-40ab-ae54-c4629bbf0629.jpg', NULL, 107);
+INSERT INTO `image` VALUES (93, NULL, '2022-06-24 19:26:59', NULL, '2022-06-24 19:26:59', 'ea7345f9-a64e-4133-b108-9bedbf692d37.jpg', NULL, 107);
+INSERT INTO `image` VALUES (94, NULL, '2022-06-24 19:33:55', NULL, '2022-06-24 19:33:55', '5146c3e1-862e-42e1-9aa4-752ab54399de.jpg', NULL, 108);
+INSERT INTO `image` VALUES (95, NULL, '2022-06-24 19:33:55', NULL, '2022-06-24 19:33:55', '2c5d1b4a-e84b-43a6-830f-b37927b75b32.jpg', NULL, 108);
+INSERT INTO `image` VALUES (96, NULL, '2022-06-24 19:33:55', NULL, '2022-06-24 19:33:55', 'b05a90a7-a17e-4391-a697-9aef792e2cc0.jpg', NULL, 108);
+INSERT INTO `image` VALUES (97, NULL, '2022-06-24 19:33:55', NULL, '2022-06-24 19:33:55', 'be2d1e26-aaab-476b-bfad-ca7f476b0ccb.jpg', NULL, 108);
+INSERT INTO `image` VALUES (98, NULL, '2022-06-24 19:41:35', NULL, '2022-06-24 19:41:35', '6a4bb478-693d-45f7-a4ba-d5971c423ae3.jpg', NULL, 109);
+INSERT INTO `image` VALUES (99, NULL, '2022-06-24 19:41:35', NULL, '2022-06-24 19:41:35', '73abd4a5-0e4d-4a24-a7d7-cbed6c9b7c21.jpg', NULL, 109);
+INSERT INTO `image` VALUES (100, NULL, '2022-06-24 19:41:35', NULL, '2022-06-24 19:41:35', 'c587a5a3-7da2-45c8-b083-f08dda444d4d.jpg', NULL, 109);
+INSERT INTO `image` VALUES (101, NULL, '2022-06-24 19:41:35', NULL, '2022-06-24 19:41:35', '59108834-b0a7-447a-822b-63381ccc0b54.jpg', NULL, 109);
+INSERT INTO `image` VALUES (102, NULL, '2022-06-24 19:41:35', NULL, '2022-06-24 19:41:35', '41aa1907-6359-438e-b0dc-3b1a26393a6e.jpg', NULL, 109);
 
 -- ----------------------------
 -- Table structure for material
@@ -956,19 +1029,26 @@ CREATE TABLE `pending_item`  (
   `quantity` int NOT NULL,
   `cart_id` bigint NULL DEFAULT NULL,
   `product_id` bigint NULL DEFAULT NULL,
+  `cart_item_id` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `FKgoa2ww7wr7brk1yhc2t2tnluj`(`cart_id` ASC) USING BTREE,
   INDEX `FKfrd7bac07qer6nt2cl2oh56we`(`product_id` ASC) USING BTREE,
+  INDEX `FKn0q64yu0ppf1ulkhposrwxctf`(`cart_item_id` ASC) USING BTREE,
   CONSTRAINT `FKfrd7bac07qer6nt2cl2oh56we` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `FKgoa2ww7wr7brk1yhc2t2tnluj` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+  CONSTRAINT `FKgoa2ww7wr7brk1yhc2t2tnluj` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FKn0q64yu0ppf1ulkhposrwxctf` FOREIGN KEY (`cart_item_id`) REFERENCES `cart_item` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pending_item
 -- ----------------------------
-INSERT INTO `pending_item` VALUES (14, NULL, '2022-06-20 04:51:59', NULL, '2022-06-20 04:52:01', 3, 4, 100);
-INSERT INTO `pending_item` VALUES (15, NULL, '2022-06-20 04:52:06', NULL, '2022-06-20 04:52:06', 1, 4, 101);
-INSERT INTO `pending_item` VALUES (16, NULL, '2022-06-20 04:53:33', NULL, '2022-06-20 05:43:25', 14, 4, 98);
+INSERT INTO `pending_item` VALUES (18, 'anonymousUser', '2022-06-25 15:50:57', 'anonymousUser', '2022-06-25 16:18:51', 4, NULL, 99, 5);
+INSERT INTO `pending_item` VALUES (19, 'anonymousUser', '2022-06-25 16:21:25', NULL, '2022-06-25 17:00:04', 5, NULL, 98, 5);
+INSERT INTO `pending_item` VALUES (20, 'anonymousUser', '2022-06-25 16:28:04', 'anonymousUser', '2022-06-25 16:28:04', 2, NULL, 107, 6);
+INSERT INTO `pending_item` VALUES (21, 'anonymousUser', '2022-06-25 16:28:34', 'anonymousUser', '2022-06-25 16:56:44', 4, NULL, 107, 7);
+INSERT INTO `pending_item` VALUES (22, NULL, '2022-06-25 16:42:28', NULL, '2022-06-25 16:59:45', 9, NULL, 101, 6);
+INSERT INTO `pending_item` VALUES (23, 'anonymousUser', '2022-06-25 16:57:09', 'anonymousUser', '2022-06-25 16:57:09', 2, NULL, 98, 8);
+INSERT INTO `pending_item` VALUES (24, NULL, '2022-06-25 17:01:57', NULL, '2022-06-25 17:35:20', 11, NULL, 109, 6);
 
 -- ----------------------------
 -- Table structure for permission
@@ -1014,6 +1094,7 @@ CREATE TABLE `product`  (
   `status_id` bigint NULL DEFAULT NULL,
   `buy_price` double NOT NULL,
   `origin_id` bigint NULL DEFAULT NULL,
+  `shop_id` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `FKs6cydsualtsrprvlf2bb3lcam`(`brand_id` ASC) USING BTREE,
   INDEX `FK1mtsbur82frn64de7balymq9s`(`category_id` ASC) USING BTREE,
@@ -1022,22 +1103,27 @@ CREATE TABLE `product`  (
   INDEX `FKsccbu8jiglqc6t5tjsp04amv7`(`size_id` ASC) USING BTREE,
   INDEX `FK8556hocjcb04st51nt8yknfbg`(`status_id` ASC) USING BTREE,
   INDEX `FKsk257mxbg5s28xt71e90pv3xm`(`origin_id` ASC) USING BTREE,
+  INDEX `FK94hgg8hlqfqfnt3dag950vm7n`(`shop_id` ASC) USING BTREE,
   CONSTRAINT `FK1mtsbur82frn64de7balymq9s` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FK8556hocjcb04st51nt8yknfbg` FOREIGN KEY (`status_id`) REFERENCES `status` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK94hgg8hlqfqfnt3dag950vm7n` FOREIGN KEY (`shop_id`) REFERENCES `shop` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FKh1dt3psyi40p0njd9es1l2wpm` FOREIGN KEY (`recommend_id`) REFERENCES `recommend` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FKs6cydsualtsrprvlf2bb3lcam` FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FKsccbu8jiglqc6t5tjsp04amv7` FOREIGN KEY (`size_id`) REFERENCES `size` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `FKw04fq456sc4tk26tnbhvr59o` FOREIGN KEY (`material_id`) REFERENCES `material` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `FKsk257mxbg5s28xt71e90pv3xm` FOREIGN KEY (`origin_id`) REFERENCES `origin` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 102 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+  CONSTRAINT `FKsk257mxbg5s28xt71e90pv3xm` FOREIGN KEY (`origin_id`) REFERENCES `origin` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FKw04fq456sc4tk26tnbhvr59o` FOREIGN KEY (`material_id`) REFERENCES `material` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 110 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of product
 -- ----------------------------
-INSERT INTO `product` VALUES (98, 'anonymousUser', '2022-06-17 06:56:03', 'anonymousUser', '2022-06-17 06:56:03', '98', 'Bức phá giới hạn với xe đua đệm khí siêu mạnh Drone Power Racers. Khả năng tách rời và kết hợp 2 trong 1 siêu linh hoạt giúp Drone Power Racers đạt được tốc độ tới đa khi đua trên mặt đất và bức phá ở những chặng cuối với khả năng bay tăng tốc.', 50, 'Xe đua đệm khí Drone Power Racer', 'TQ', 20, 999000, 5, 1, 2, 5, 110, 1, 500000, 1);
-INSERT INTO `product` VALUES (99, 'anonymousUser', '2022-06-17 06:59:32', 'anonymousUser', '2022-06-17 06:59:32', '99', 'Among Us là một tựa game online nổi tiếng trên toàn cầu - làm mưa làm gió trong giới trẻ những năm gần đây. Among Us - by Toikido - là sản phẩm đồ chơi với bản quyền chính thức từ game Among Us.\nSưu tập trọn bộ 13 Phi hành gia bí ấn - trong đó có 1 phi hành gia đặc biệt cực hiếm, có thể phát sáng trong đêm.\nMỗi Phi hành gia sẽ đi kèm theo các phụ kiện và chân đế để trưng bày.', 0, 'Phi hành gia bí ẩn Among Us', 'TQ', 20, 279000, 4, 1, 2, 5, 111, 1, 279000, 1);
-INSERT INTO `product` VALUES (100, 'anonymousUser', '2022-06-17 07:01:30', 'anonymousUser', '2022-06-17 07:01:30', '100', 'Among Us là tựa game online nổi tiếng trên toàn cầu - làm mưa làm gió trong giới trẻ những năm gần đây. Among Us - by Toikido - là sản phẩm đồ chơi với bản quyền chính thức của game Among Us.\nSản phẩm đèn phi hành gia Among Us có kèm pin LR44 (3 viên). Có thể sử dụng ngay.\nĐèn có nút với 2 chế độ sáng vừa và sáng nhẹ. Có thể sử dụng như đèn trang trí, đèn ngủ. Có 4 màu để các bạn tha hồ lựa chọn theo sở thích của mình, gồm: Đỏ, vàng, tím và xanh ngọc', 0, 'Đèn phi hành gia Among Us màu vàng', 'TQ', 20, 299000, 4, 3, 2, 4, 112, 1, 299000, 2);
-INSERT INTO `product` VALUES (101, 'anonymousUser', '2022-06-17 07:02:49', 'anonymousUser', '2022-06-17 07:02:49', '101', 'Among Us là tựa game online nổi tiếng trên toàn cầu - làm mưa làm gió trong giới trẻ những năm gần đây. Among Us - by Toikido - là sản phẩm đồ chơi với bản quyền chính thức của game Among Us.\nSản phẩm đèn phi hành gia Among Us có kèm pin LR44 (3 viên). Có thể sử dụng ngay.\nĐèn có nút với 2 chế độ sáng vừa và sáng nhẹ. Có thể sử dụng như đèn trang trí, đèn ngủ. Có 4 màu để các bạn tha hồ lựa chọn theo sở thích của mình, gồm: Đỏ, vàng, tím và xanh ngọc', 0, 'Đèn phi hành gia Among Us màu đỏ', 'TQ', 20, 299000, 4, 3, 2, 4, 113, 1, 299000, 3);
+INSERT INTO `product` VALUES (98, 'anonymousUser', '2022-06-17 06:56:03', 'anonymousUser', '2022-06-17 06:56:03', '98', 'Bức phá giới hạn với xe đua đệm khí siêu mạnh Drone Power Racers. Khả năng tách rời và kết hợp 2 trong 1 siêu linh hoạt giúp Drone Power Racers đạt được tốc độ tới đa khi đua trên mặt đất và bức phá ở những chặng cuối với khả năng bay tăng tốc.', 50, 'Xe đua đệm khí Drone Power Racer', 'TQ', 20, 999000, 5, 1, 2, 5, 110, 1, 500000, 1, 3);
+INSERT INTO `product` VALUES (99, 'anonymousUser', '2022-06-17 06:59:32', 'anonymousUser', '2022-06-17 06:59:32', '99', 'Among Us là một tựa game online nổi tiếng trên toàn cầu - làm mưa làm gió trong giới trẻ những năm gần đây. Among Us - by Toikido - là sản phẩm đồ chơi với bản quyền chính thức từ game Among Us.\nSưu tập trọn bộ 13 Phi hành gia bí ấn - trong đó có 1 phi hành gia đặc biệt cực hiếm, có thể phát sáng trong đêm.\nMỗi Phi hành gia sẽ đi kèm theo các phụ kiện và chân đế để trưng bày.', 0, 'Phi hành gia bí ẩn Among Us', 'TQ', 20, 279000, 4, 1, 2, 5, 111, 1, 279000, 1, 3);
+INSERT INTO `product` VALUES (100, 'anonymousUser', '2022-06-17 07:01:30', 'anonymousUser', '2022-06-17 07:01:30', '100', 'Among Us là tựa game online nổi tiếng trên toàn cầu - làm mưa làm gió trong giới trẻ những năm gần đây. Among Us - by Toikido - là sản phẩm đồ chơi với bản quyền chính thức của game Among Us.\nSản phẩm đèn phi hành gia Among Us có kèm pin LR44 (3 viên). Có thể sử dụng ngay.\nĐèn có nút với 2 chế độ sáng vừa và sáng nhẹ. Có thể sử dụng như đèn trang trí, đèn ngủ. Có 4 màu để các bạn tha hồ lựa chọn theo sở thích của mình, gồm: Đỏ, vàng, tím và xanh ngọc', 0, 'Đèn phi hành gia Among Us màu vàng', 'TQ', 20, 299000, 4, 3, 2, 4, 112, 1, 299000, 2, 3);
+INSERT INTO `product` VALUES (101, 'anonymousUser', '2022-06-17 07:02:49', 'anonymousUser', '2022-06-17 07:02:49', '101', 'Among Us là tựa game online nổi tiếng trên toàn cầu - làm mưa làm gió trong giới trẻ những năm gần đây. Among Us - by Toikido - là sản phẩm đồ chơi với bản quyền chính thức của game Among Us.\nSản phẩm đèn phi hành gia Among Us có kèm pin LR44 (3 viên). Có thể sử dụng ngay.\nĐèn có nút với 2 chế độ sáng vừa và sáng nhẹ. Có thể sử dụng như đèn trang trí, đèn ngủ. Có 4 màu để các bạn tha hồ lựa chọn theo sở thích của mình, gồm: Đỏ, vàng, tím và xanh ngọc', 0, 'Đèn phi hành gia Among Us màu đỏ', 'TQ', 20, 299000, 4, 3, 2, 4, 113, 1, 299000, 3, 4);
+INSERT INTO `product` VALUES (107, NULL, '2022-06-24 19:26:59', NULL, '2022-06-24 19:26:59', '107', 'Robot siêu khổng lồ Cảnh sát vũ trụ Tri Cop 3 trong 1 là sản phẩm thuộc thương hiệu SAMG Entertainment, một sản phẩm đến từ Series phim hoạt hình được nhiều bạn nhỏ yêu thích – MINIFORCE\n\nSiêu Robot có ba chế độ kết hợp với nhau bằng 3 robot nhỏ là:\n\n• Robot cảnh sát hỏa ngưu\n\n• Robot cảnh sát hổ trắng\n\n• Robot cảnh sát đại bàng Thỏa sức để bé sáng, kích thích khả năng phát triển tư duy của bé.', 0, 'Robot siêu khổng lồ Cảnh sát vũ trụ Tri Cop 3 trong 1', 'TQ', 20, 1190000, 2, 1, 2, 4, 119, 1, 1199000, 2, 4);
+INSERT INTO `product` VALUES (108, NULL, '2022-06-24 19:33:54', NULL, '2022-06-24 19:33:55', '108', 'Siêu Robot Cảnh sát vũ trụ Cá mập Jaws Cop là sản phẩm thuộc thương hiệu SAMG Entertainment, một sản phẩm đến từ Series phim hoạt hình được nhiều bạn nhỏ yêu thích – MINIFORCE\n\nSiêu Robot có khả năng biến hình từ Robot sang xe Cảnh sát cá mập và ngược lại Bé thỏa sức sáng tạo với 2 kiểu biến hình này', 0, 'Siêu Robot Cảnh sát vũ trụ Cá mập Jaws Cop', 'TQ', 10, 1190000, 1, 1, 2, 4, 120, 1, 1190000, 1, 4);
+INSERT INTO `product` VALUES (109, NULL, '2022-06-24 19:41:34', NULL, '2022-06-24 19:41:35', '109', 'Robot Chiến binh thú Cá sấu Croker - 309010 Robot Chiến binh thú Cá sấu Croker là sản phẩm thuộc thương hiệu SAMG Entertainment, một sản phẩm đến từ Series phim hoạt hình được nhiều bạn nhỏ yêu thích – MINIFORCE\n\nSiêu Robot có khả năng biến hình từ Chiến binh sang Thú - Cá sấu vệ thần để hỗ trợ cho các đồng đội của mình Bé thỏa sức sáng tạo với 2 kiểu biến hình này Kích thích trí sáng tạo và khả năng tư duy của bé', 0, 'Robot Chiến binh thú Cá sấu Croker', 'TQ', 10, 699000, 2, 1, 2, 4, 121, 1, 699000, 3, 4);
 
 -- ----------------------------
 -- Table structure for province
@@ -1057,7 +1143,7 @@ CREATE TABLE `province`  (
 -- ----------------------------
 -- Records of province
 -- ----------------------------
-INSERT INTO `province` VALUES (1, NULL, NULL, NULL, NULL, 'SG', 'Hồ Chí Minh');
+INSERT INTO `province` VALUES (1, NULL, NULL, NULL, NULL, 'SG', 'TP.Hồ Chí Minh');
 INSERT INTO `province` VALUES (2, NULL, NULL, NULL, NULL, 'HN', 'Hà Nội');
 INSERT INTO `province` VALUES (3, NULL, NULL, NULL, NULL, 'DDN', 'Đà Nẵng');
 INSERT INTO `province` VALUES (4, NULL, NULL, NULL, NULL, 'BD', 'Bình Dương');
@@ -1199,14 +1285,19 @@ CREATE TABLE `shop`  (
   `response_rate` int NOT NULL,
   `response_time` int NOT NULL,
   `image_id` bigint NULL DEFAULT NULL,
+  `user_id` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `FKh6ljwm1vgre8v1c4sras9hap5`(`image_id` ASC) USING BTREE,
-  CONSTRAINT `FKh6ljwm1vgre8v1c4sras9hap5` FOREIGN KEY (`image_id`) REFERENCES `image` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+  INDEX `FKj97brjwss3mlgdt7t213tkchl`(`user_id` ASC) USING BTREE,
+  CONSTRAINT `FKh6ljwm1vgre8v1c4sras9hap5` FOREIGN KEY (`image_id`) REFERENCES `image` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FKj97brjwss3mlgdt7t213tkchl` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of shop
 -- ----------------------------
+INSERT INTO `shop` VALUES (3, 'anonymousUser', '2022-06-24 15:58:09', 'anonymousUser', '2022-06-24 15:58:09', 0, 0, 'huynhgiahuy492@gmail.com', 0, 0, 0, 0, NULL, 10);
+INSERT INTO `shop` VALUES (4, NULL, '2022-06-25 16:25:43', NULL, '2022-06-25 16:25:43', 0, 0, '18130094@st.hcmuaf.edu.vn', 0, 0, 0, 0, NULL, 11);
 
 -- ----------------------------
 -- Table structure for size
@@ -1223,7 +1314,7 @@ CREATE TABLE `size`  (
   `weight` double NOT NULL,
   `width` double NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 114 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 122 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of size
@@ -1232,6 +1323,12 @@ INSERT INTO `size` VALUES (110, 'anonymousUser', '2022-06-17 06:56:03', 'anonymo
 INSERT INTO `size` VALUES (111, 'anonymousUser', '2022-06-17 06:59:32', 'anonymousUser', '2022-06-17 06:59:32', 40, 40, 500, 40);
 INSERT INTO `size` VALUES (112, 'anonymousUser', '2022-06-17 07:01:30', 'anonymousUser', '2022-06-17 07:01:30', 40, 40, 500, 40);
 INSERT INTO `size` VALUES (113, 'anonymousUser', '2022-06-17 07:02:49', 'anonymousUser', '2022-06-17 07:02:49', 40, 40, 500, 40);
+INSERT INTO `size` VALUES (116, NULL, '2022-06-24 17:04:23', NULL, '2022-06-24 17:04:23', 40, 40, 500, 40);
+INSERT INTO `size` VALUES (117, NULL, '2022-06-24 17:07:20', NULL, '2022-06-24 17:07:20', 40, 40, 500, 40);
+INSERT INTO `size` VALUES (118, NULL, '2022-06-24 17:08:26', NULL, '2022-06-24 17:08:26', 40, 40, 500, 40);
+INSERT INTO `size` VALUES (119, NULL, '2022-06-24 19:26:59', NULL, '2022-06-24 19:26:59', 40, 40, 500, 40);
+INSERT INTO `size` VALUES (120, NULL, '2022-06-24 19:33:54', NULL, '2022-06-24 19:33:54', 40, 40, 500, 40);
+INSERT INTO `size` VALUES (121, NULL, '2022-06-24 19:41:34', NULL, '2022-06-24 19:41:34', 40, 40, 500, 40);
 
 -- ----------------------------
 -- Table structure for status
@@ -1267,7 +1364,7 @@ CREATE TABLE `token`  (
   `token` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
   `token_expiration_date` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 52 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 96 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of token
@@ -1319,6 +1416,41 @@ INSERT INTO `token` VALUES (48, NULL, '2022-06-20 04:30:58', NULL, '2022-06-20 0
 INSERT INTO `token` VALUES (49, 'anonymousUser', '2022-06-20 10:15:37', NULL, '2022-06-20 12:10:20', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTU3MDQyNTksImlhdCI6MTY1NTcwMTgxOX0.11lAhFLOSQG_Hui0jQcLwA8KkhYEWutgK9bf7J6CI_JVIdEOEauxdHC7T_NoJIUDyIq6e-Tl6I1SH1C0-XJ_vQ', '2022-06-20 12:50:59');
 INSERT INTO `token` VALUES (50, 'anonymousUser', '2022-06-20 11:43:36', 'anonymousUser', '2022-06-20 11:43:36', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTU3MDI2NTUsImlhdCI6MTY1NTcwMDIxNX0.EbTH4DAjGQReyhvjm9cGNwpfPfy_4VMrllGo-5z8Ux6KAx6vpjR8VilXW1cdnGu7HdyRiJlD8IXJ0MvKJrxnVA', '2022-06-20 12:24:15');
 INSERT INTO `token` VALUES (51, 'anonymousUser', '2022-06-21 00:20:36', NULL, '2022-06-21 00:37:17', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTU3NDkwNzYsImlhdCI6MTY1NTc0NjYzNn0.abRvPyxxGDMPbKdVblPKOS_pFEBlBbCsK77Bzz1XhJhgwxIDGVaX-zcy7egv9n7OZTuNWI5DXN39I6Vy0VL0sA', '2022-06-21 01:17:56');
+INSERT INTO `token` VALUES (52, 'anonymousUser', '2022-06-21 04:28:49', NULL, '2022-06-21 05:25:42', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTU3NjYzODEsImlhdCI6MTY1NTc2Mzk0MX0.froZVQw8mDCPQc4oHW6_osFSCVeCwKzmsoiIRisKFJV-HA0NkfkZTwOwLIj5RJd_GLz12y_F9ScqoAt48XImpQ', '2022-06-21 06:06:21');
+INSERT INTO `token` VALUES (53, 'anonymousUser', '2022-06-23 11:56:32', NULL, '2022-06-23 12:01:56', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTU5NjI5NTYsImlhdCI6MTY1NTk2MDUxNn0.QJSWZKU-8AbJqeFNCbT9keOqXQAKwysQ8jdma1Ql1Lf423M5zYokEJ2my7alsLVu_A69grVe6ITmByQCUwuOMQ', '2022-06-23 12:42:36');
+INSERT INTO `token` VALUES (54, 'anonymousUser', '2022-06-23 12:04:25', NULL, '2022-06-23 16:42:24', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTU5Nzk3ODMsImlhdCI6MTY1NTk3NzM0M30.JaOp3aBWZj1nhPkAAMjXW28WPrTvPRUYpogEeWXMXguq2dZ5DdZ0YVHR0kbHn9SwdiHE6NkbyTQwAe1m-WLKIQ', '2022-06-23 17:23:03');
+INSERT INTO `token` VALUES (55, 'anonymousUser', '2022-06-23 17:29:43', NULL, '2022-06-23 17:41:56', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTU5ODMzNTYsImlhdCI6MTY1NTk4MDkxNn0._l2QEVOf-5v0hZ-4B3d8d2oeBcXYK9aJwEF-yp5x4VxxJGjZnSeTOWrIziyR35HrCeBS5mto5Ax8IT63XMWteA', '2022-06-23 18:22:36');
+INSERT INTO `token` VALUES (56, 'anonymousUser', '2022-06-23 17:42:25', NULL, '2022-06-23 18:24:42', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTU5ODU5MjIsImlhdCI6MTY1NTk4MzQ4Mn0.YcJWjzGMkGdrzwVf5pQMGazpIZkBC0Ssby4T7uhq6ISB1XZAZexkB9nQWdQ2-zd1RDtIZddixRevuUh8HMbDyw', '2022-06-23 19:05:22');
+INSERT INTO `token` VALUES (57, 'anonymousUser', '2022-06-24 06:13:43', NULL, '2022-06-24 06:21:56', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYwMjg5NTUsImlhdCI6MTY1NjAyNjUxNX0.lXmXj9M6qy_IeP8dq8Mb-aKaRjdaS_M81-ihhBp-07uYgVpfUlnT4jZA3h3V7p9X1I1afexywqgxWPNAHqWI9g', '2022-06-24 07:02:35');
+INSERT INTO `token` VALUES (58, 'anonymousUser', '2022-06-24 06:22:30', NULL, '2022-06-24 08:29:30', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYwMzY2MTAsImlhdCI6MTY1NjAzNDE3MH0.dH7matRMpT6AkFGkEDDrXHWQCd9SCfp6KEqXtvy-b5M3beJYHxP2X5Vl2_v9Ai14w2NRDEKpfPnlg2KPqF___Q', '2022-06-24 09:10:10');
+INSERT INTO `token` VALUES (60, NULL, '2022-06-24 09:12:39', NULL, '2022-06-24 09:51:12', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYwNDE1MTIsImlhdCI6MTY1NjAzOTA3Mn0.e6sUkFMpDy4uyzvw9uvVuWKXoTytuuTfqHtl6I1wjMnnTw5_LoBV58yWLJHzM8K9YefK3_h23TbkbRhACFOV7g', '2022-06-24 10:31:52');
+INSERT INTO `token` VALUES (61, 'anonymousUser', '2022-06-24 12:24:31', NULL, '2022-06-24 13:18:09', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYwNTM5MjksImlhdCI6MTY1NjA1MTQ4OX0.CsOX19KI9XNCO8VMsh3_r_r9vq2SLg6Otu8gpOoYD3BPQcnf5nS602t25VqCUzcJOSwVgqhxAiBsH1qtFsg5Hg', '2022-06-24 13:58:49');
+INSERT INTO `token` VALUES (62, 'anonymousUser', '2022-06-24 14:26:39', NULL, '2022-06-24 14:44:17', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYwNTkwOTYsImlhdCI6MTY1NjA1NjY1Nn0.gm6hgB2vjg3OQRFzsl7HFQdrDYGelOilZBCGAQOIJE4rL-N3AeQMHcYPxRysjkvyeQSMdJaQvATktatjoiV5RQ', '2022-06-24 15:24:56');
+INSERT INTO `token` VALUES (63, 'anonymousUser', '2022-06-24 15:14:34', NULL, '2022-06-24 15:15:21', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYwNjA5NjAsImlhdCI6MTY1NjA1ODUyMH0.82gS408XiQ1-QFMT_fS_LoHgoUI37aJf7h3iEq6uP97faI2etBoBAuFOc4gt78JA-tmNMgbc2A6hf_dMltW76Q', '2022-06-24 15:56:00');
+INSERT INTO `token` VALUES (64, NULL, '2022-06-24 15:15:24', NULL, '2022-06-24 15:15:24', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYwNjA5NjMsImlhdCI6MTY1NjA1ODUyM30.gpYStkuvDe7Hn3TESZuTDQsdrE9XcuuEg0FOq6ABoyMViVUhwekP9QZdj_eyXcU8nOwRTk5Py9d5ccHPX3sD_Q', '2022-06-24 15:56:03');
+INSERT INTO `token` VALUES (65, NULL, '2022-06-24 15:15:34', NULL, '2022-06-24 15:18:48', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYwNjExNjcsImlhdCI6MTY1NjA1ODcyN30.VFmCv58zAmIWPZs04UqNsxR_1bjAoPnMADH5-db9eneXWbO5wwccOKwTOXouhVEv6mhCPe-Ww2PK4HY562OB0A', '2022-06-24 15:59:27');
+INSERT INTO `token` VALUES (66, NULL, '2022-06-24 15:18:50', NULL, '2022-06-24 17:50:42', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYwNzAyODEsImlhdCI6MTY1NjA2Nzg0MX0.J4w0DWl00aTBkU7Hv7rDQSx5S3Yy6tCruTnkrpYA26thby4SZO7Ev17gUuPBtOfrt8Au0qxwrVec_jfY6tAccg', '2022-06-24 18:31:21');
+INSERT INTO `token` VALUES (67, NULL, '2022-06-24 15:54:06', NULL, '2022-06-24 15:54:06', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYwNjMyODYsImlhdCI6MTY1NjA2MDg0Nn0.0oQg2_rK8ieuE2KWcqWSlFxp_AfUjDahkIAok7d4TgyM_Vilp8miTLXYldlpQbOYsIdca05r-MYvlzu2UR50YQ', '2022-06-24 16:34:46');
+INSERT INTO `token` VALUES (68, NULL, '2022-06-24 15:58:26', NULL, '2022-06-24 15:58:26', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYwNjM1NDYsImlhdCI6MTY1NjA2MTEwNn0.rrPh3uYdAyak9OzpjEkF17a8yJqlsvskaoSQjv4TV0UG4G5dzBLqtw8MQ3MrV4ivO5i6ulW9_m0hdqHk4yMGzw', '2022-06-24 16:39:06');
+INSERT INTO `token` VALUES (69, 'anonymousUser', '2022-06-24 17:50:01', 'anonymousUser', '2022-06-24 17:50:01', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYwNzAyNDEsImlhdCI6MTY1NjA2NzgwMX0.uCCqMbvKBg58ZQKl1tScIwRJ1zR_bJD8_mlVa9OnMz5-F1T2h5RjZhCukLWp9yBlvfnhnyZat1sCCKTeZDx7xQ', '2022-06-24 18:30:41');
+INSERT INTO `token` VALUES (70, NULL, '2022-06-24 17:53:30', NULL, '2022-06-24 18:26:40', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYwNzI0NDAsImlhdCI6MTY1NjA3MDAwMH0.bNSiZNmhNyXn5m7JwPadQzf5WlUManQFKx8rY47LUsDGfhKjOlpGaEBEB82yrgnaVc8g0H1_skViKYZ-yaIPaQ', '2022-06-24 19:07:20');
+INSERT INTO `token` VALUES (72, 'anonymousUser', '2022-06-24 18:27:36', NULL, '2022-06-24 18:27:48', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYwNzI1MDcsImlhdCI6MTY1NjA3MDA2N30.zalZFV4g9P14wbGFcfjly7gLUfp0fdQ0GCnonb1YKhTvKL0xTD4yEAMfz7NtE_bVrUvq64o4tNvypBoymaUK0g', '2022-06-24 19:08:27');
+INSERT INTO `token` VALUES (73, 'anonymousUser', '2022-06-24 18:29:15', NULL, '2022-06-24 21:43:22', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYwODQyNDIsImlhdCI6MTY1NjA4MTgwMn0.fhsFVlXbqoeIqdvF-3-Ug5VlsVmc-0w2a5g0ksTonCmXCybG9jkHLsmLXjruRzKDRw5ZNUyNZZwznEOJgxYJKg', '2022-06-24 22:24:02');
+INSERT INTO `token` VALUES (74, 'anonymousUser', '2022-06-24 18:30:02', NULL, '2022-06-24 18:53:21', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYwNzQwNDEsImlhdCI6MTY1NjA3MTYwMX0.jlpIg5V5x-NVoPScqRtE77bUY_zl4rnG-9bGVxc6jOkWCscEllXMQNR94au5hnsN_tk1IH11YCHaT808wrrcIg', '2022-06-24 19:34:01');
+INSERT INTO `token` VALUES (76, NULL, '2022-06-24 18:51:04', NULL, '2022-06-24 19:42:57', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYwNzcwMTcsImlhdCI6MTY1NjA3NDU3N30.WfPpo1RjjH0huKda6T_KkuR7JkOEmXmlcbSH0CtZYTM4JQinT-oza3X19kHqaQPj8UN1u4iEfRfvAYnevdWMGw', '2022-06-24 20:23:37');
+INSERT INTO `token` VALUES (77, NULL, '2022-06-24 18:53:24', NULL, '2022-06-24 19:18:00', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYwNzU1MjAsImlhdCI6MTY1NjA3MzA4MH0.6VlYINOPNygJjwUzmiT3SAGwk1hjnTVYz_SqD2re5NxOWM8nP_PR2uHnITaESkGH-DS99N_8bSsmobwxCsAtAg', '2022-06-24 19:58:40');
+INSERT INTO `token` VALUES (78, NULL, '2022-06-24 19:02:14', NULL, '2022-06-24 19:02:14', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYwNzQ1NzQsImlhdCI6MTY1NjA3MjEzNH0.zRTLFS4XBGyKeMClWXXXKuu4RNAKpXHqOYDRg1_229c6N-IusJzY_cYZsijSH1959YdZb_REcNc4TMlytkQfPA', '2022-06-24 19:42:54');
+INSERT INTO `token` VALUES (79, NULL, '2022-06-24 19:19:21', NULL, '2022-06-24 19:21:04', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYwNzU3MDQsImlhdCI6MTY1NjA3MzI2NH0.SfWXe0QUFF5YfGhnlvUA3yb7tmUNgIjxSxshC3rgKnKJuKbcFidFf3KVuw3MBTCtPFRFB1H_WJmYoQxgz2VXbQ', '2022-06-24 20:01:44');
+INSERT INTO `token` VALUES (80, NULL, '2022-06-24 19:24:36', NULL, '2022-06-24 19:24:36', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYwNzU5MTYsImlhdCI6MTY1NjA3MzQ3Nn0.7xZDF4HQImCLCwlMtStG0LL9N5sZMcv7FQ69Dv2DgLACjiOQcx5jEaGCrWSEOKKCJvjFcu3Ews2KPX5_L0PuEQ', '2022-06-24 20:05:16');
+INSERT INTO `token` VALUES (81, 'anonymousUser', '2022-06-24 19:36:50', NULL, '2022-06-24 19:43:23', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYwNzcwNDIsImlhdCI6MTY1NjA3NDYwMn0.pemvYU_1mbMgT04iVWzfKQnimM-1chJvhKUjGTg36u7AXeC4RZuWiZ6JhZaUW0dO7bp2SE6wiEpE98AF7aaVcw', '2022-06-24 20:24:02');
+INSERT INTO `token` VALUES (82, NULL, '2022-06-24 19:43:16', NULL, '2022-06-24 21:57:05', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYwODUwNjUsImlhdCI6MTY1NjA4MjYyNX0.XNeTnmQMCgOIwVj0aRUH0QuhZ3dceDlItqkxbEQdmrXSWEB3JSE-QzxSPpwl0-agY2HJjuMAEh59IhPv1Lr6yQ', '2022-06-24 22:37:45');
+INSERT INTO `token` VALUES (83, 'anonymousUser', '2022-06-25 14:36:39', NULL, '2022-06-25 15:13:17', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYxNDcyMzcsImlhdCI6MTY1NjE0NDc5N30.My1bDdE1essm-lWnGlzyc5oQ3Jp7NmPkTlzPkXMYC1BuGOXLFPTkzclYyCgv5tMwa71wwxRO6ejbdsuvOlSdDA', '2022-06-25 15:53:57');
+INSERT INTO `token` VALUES (84, 'anonymousUser', '2022-06-25 15:13:38', 'anonymousUser', '2022-06-25 15:13:38', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYxNDcyNTcsImlhdCI6MTY1NjE0NDgxN30.aHPzUUusfZTx_fUcXWdXgIf2Z-mSIL9hgyx4eyPK8OuOGgt7URWDjWlCgv6wRERLrIwreACpmLUxdc2x0ScLuQ', '2022-06-25 15:54:17');
+INSERT INTO `token` VALUES (87, NULL, '2022-06-25 16:26:24', NULL, '2022-06-25 16:26:30', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODEzMDA5NEBzdC5oY211YWYuZWR1LnZuIiwiZXhwIjoxNjU2MTUxNjI5LCJpYXQiOjE2NTYxNDkxODl9.efhWbvH7BNz2UtnxurZJO2LYyoCmtrwbUiN-ETL6P0gK5nUj9XP1Zecdcy3fvDQtRc20-nljk5ix4b44Sdj8Mw', '2022-06-25 17:07:09');
+INSERT INTO `token` VALUES (90, NULL, '2022-06-25 16:40:51', NULL, '2022-06-25 16:40:51', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYxNTI0OTEsImlhdCI6MTY1NjE1MDA1MX0.PgOUThtLFxWqNLg9RJsaox2q-XxiGb34H7SIUNKeBBwtX4st3keR3R75RigUtrtmoaNBNdCCmVhoWMHf2Fd80g', '2022-06-25 17:21:31');
+INSERT INTO `token` VALUES (91, NULL, '2022-06-25 16:41:12', NULL, '2022-06-25 17:39:08', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYxNTU5ODcsImlhdCI6MTY1NjE1MzU0N30.jysbIApIGbO6-HmXdun5nGSEN-IQ22anw0q-WHlsUjO7DnnXpq7MzhBxcIynXA5DDXBtUnq3hjcPAy7YquZHtg', '2022-06-25 18:19:47');
+INSERT INTO `token` VALUES (92, NULL, '2022-06-25 16:45:58', NULL, '2022-06-25 17:41:36', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYxNTYxMzYsImlhdCI6MTY1NjE1MzY5Nn0.DKAGoPm9KnS_q3_lA0_o3Avu-7jW4EYJuX7rfmqpvzWENLuJ35oksQB6KkND579k7THov-IuNyrI_aBdTcmv7Q', '2022-06-25 18:22:16');
+INSERT INTO `token` VALUES (95, 'anonymousUser', '2022-06-26 11:53:46', 'anonymousUser', '2022-06-26 11:53:46', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodXluaGdpYWh1eTQ5MkBnbWFpbC5jb20iLCJleHAiOjE2NTYyMjE2NjUsImlhdCI6MTY1NjIxOTIyNX0.WgfSPib3nDY4KkJBCUeNNQ85qXUI71re7uIJND2jf01Zit9ohbF5eAWjFMDapEjZ88_H-jKZ0FI_102Wz2kutQ', '2022-06-26 12:34:25');
 
 -- ----------------------------
 -- Table structure for user
@@ -1341,12 +1473,13 @@ CREATE TABLE `user`  (
   `status` int NULL DEFAULT NULL,
   `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (5, 'anonymousUser', '2022-06-19 00:17:41', NULL, '2022-06-21 00:20:52', NULL, 'huynhgiahuy492@gmail.com', 'Gia Huy', 'Khác', NULL, '$2a$10$kTClvLi26swkL0cKUS/NluAp4.q2grP9zJBLTmiEecd7wO96vxPbS', '0903316526', NULL, NULL, 'huynhgiahuy492@gmail.com');
+INSERT INTO `user` VALUES (10, 'anonymousUser', '2022-06-24 15:58:09', 'anonymousUser', '2022-06-26 08:46:31', NULL, NULL, 'huynhgiahuy492@gmail.com', NULL, NULL, '$2a$10$LxguCNY3z/Pyv.lBHXttG.KVu2ciuzlkvtkRjjWdtKRx144qcEdXK', NULL, NULL, NULL, 'huynhgiahuy492@gmail.com');
+INSERT INTO `user` VALUES (11, NULL, '2022-06-25 16:25:43', NULL, '2022-06-25 16:25:43', NULL, NULL, 'Huỳnh Gia Huy 2', NULL, NULL, '$2a$10$jS82tv1xSCstMGwcxQ5rqehdUy3IdOv2Qk3xzNvIUivLu90UXSw.K', NULL, NULL, NULL, '18130094@st.hcmuaf.edu.vn');
 
 -- ----------------------------
 -- Table structure for user_role

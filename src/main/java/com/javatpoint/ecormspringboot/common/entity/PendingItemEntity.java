@@ -18,8 +18,7 @@ public class PendingItemEntity extends BaseEntity{
 
     private int quantity;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cart_id")
-    private CartEntity cart;
-
+    @ManyToOne
+    @JoinColumn(name = "cart_item_id")
+    private CartItemEntity cartItem;
 }

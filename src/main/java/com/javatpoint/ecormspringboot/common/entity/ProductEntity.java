@@ -62,4 +62,8 @@ public class ProductEntity extends BaseEntity {
 
 	@OneToMany(mappedBy = "product", cascade = {CascadeType.REMOVE,CascadeType.REFRESH})
 	private Set<PendingItemEntity> pendingItems= new HashSet<PendingItemEntity>();
+
+	@ManyToOne
+	@JoinColumn(name = "shop_id")
+	private ShopEntity shop;
 }

@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface IProvinceService{
     List<ProvinceEntity> findAll();
+    ProvinceEntity findOne(long id);
 }

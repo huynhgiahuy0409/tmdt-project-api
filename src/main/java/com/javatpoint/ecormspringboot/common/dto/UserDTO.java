@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Getter
 @Setter
 public class UserDTO {
@@ -21,7 +23,7 @@ public class UserDTO {
 
     private String gender;
 
-    private String address;
+    private Set<AddressDTO> addresses;
 
     private String email;
 
@@ -30,4 +32,6 @@ public class UserDTO {
     private String role;
 
     private CartDTO cart;
+
+    private ShopDTO shop;
 }

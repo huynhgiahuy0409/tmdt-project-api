@@ -6,7 +6,7 @@ import com.javatpoint.ecormspringboot.common.entity.JWTEntity;
 import com.javatpoint.ecormspringboot.common.entity.UserEntity;
 import com.javatpoint.ecormspringboot.common.request.AuthenticationRequest;
 import com.javatpoint.ecormspringboot.common.request.ReAccountRequest;
-import com.javatpoint.ecormspringboot.common.request.RegisterAccountRequest;
+import com.javatpoint.ecormspringboot.common.request.UserAccountRequest;
 import com.javatpoint.ecormspringboot.common.service.IJWTService;
 import com.javatpoint.ecormspringboot.common.service.ITokenAuthenticationService;
 import com.javatpoint.ecormspringboot.common.service.IUserService;
@@ -52,8 +52,8 @@ public class AuthController {
         }
     }
     @PostMapping("/register")
-    public ResponseEntity<RegisterAccountRequest> registerUserAccount(@RequestBody RegisterAccountRequest registerAccountRequest){
-        RegisterAccountRequest account = this.userService.checkUsername(registerAccountRequest);
+    public ResponseEntity<UserAccountRequest> registerUserAccount(@RequestBody UserAccountRequest registerAccountRequest){
+        UserAccountRequest account = this.userService.checkUsername(registerAccountRequest);
            return ResponseEntity.ok(account);
     }
     @PostMapping("/login")
@@ -115,19 +115,14 @@ public class AuthController {
     }
     @GetMapping(value = "/check-user")
     public ResponseEntity<Boolean> checkUser(@RequestParam String username){
-        System.out.println(username);
         if (!StringUtils.isEmpty(username)){
-            UserEntity foundUser = this.userService.findByUsername(username);
+            String refactorUsername = StringUtils.trimAllWhitespace(username);
+            UserEntity foundUser = this.userService.findByUsername(refactorUsername);
             if(foundUser != null){
                 return ResponseEntity.ok(true);
             }
             return ResponseEntity.ok(false);
         }
         return ResponseEntity.ok(false);
-    }
-    @PostMapping(value = "/reset-password")
-    public ResponseEntity<Boolean> resetPassoword(@RequestBody(required = true) ReAccountRequest reAccount){
-       this.userService.resetPassword(reAccount.getUsername(), reAccount.getNewPassword());
-        return ResponseEntity.ok(true);
     }
 }

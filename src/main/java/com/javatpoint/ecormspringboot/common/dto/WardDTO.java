@@ -13,4 +13,5 @@ public class WardDTO {
     private String name;
 
     private String prefix;
+
 }

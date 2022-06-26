@@ -26,4 +26,7 @@ public class DistrictEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "district", cascade = CascadeType.ALL)
     private Set<WardEntity> wards = new HashSet<WardEntity>();
+
+    @OneToMany(mappedBy = "district", cascade = {CascadeType.REMOVE})
+    private Set<AddressEntity> addresses = new HashSet<AddressEntity>();
 }

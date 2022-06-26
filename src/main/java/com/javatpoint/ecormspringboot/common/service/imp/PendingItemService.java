@@ -1,6 +1,7 @@
 package com.javatpoint.ecormspringboot.common.service.imp;
 
 import com.javatpoint.ecormspringboot.common.entity.CartEntity;
+import com.javatpoint.ecormspringboot.common.entity.CartItemEntity;
 import com.javatpoint.ecormspringboot.common.entity.PendingItemEntity;
 import com.javatpoint.ecormspringboot.common.entity.ProductEntity;
 import com.javatpoint.ecormspringboot.common.repository.IPendingItemRepository;
@@ -13,9 +14,10 @@ public class PendingItemService implements IPendingItemService {
     @Autowired
     private IPendingItemRepository pendingItemRepository;
 
+
     @Override
-    public PendingItemEntity findByCartAndProduct(CartEntity cart, ProductEntity product) {
-        return this.pendingItemRepository.findByCartAndProduct(cart,product);
+    public PendingItemEntity findByCartItemAndProduct(CartItemEntity cartItem, ProductEntity product) {
+        return this.pendingItemRepository.findByCartItemAndProduct(cartItem, product);
     }
 
     @Override

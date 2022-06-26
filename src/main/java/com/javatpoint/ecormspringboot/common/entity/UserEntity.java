@@ -52,4 +52,7 @@ public class UserEntity extends BaseEntity {
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private CartEntity cart;
+
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	private ShopEntity shop;
 }

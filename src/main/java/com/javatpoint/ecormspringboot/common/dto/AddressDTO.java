@@ -6,11 +6,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AddressDTO {
+    private long id;
     private String fullName;
-    private String numberPhone;
+    private String phoneNumber;
     private String detailAddress;
-    private String ward;
-    private String district;
-    private String province;
-    private boolean isDefault;
+    private WardDTO ward;
+    private DistrictDTO district;
+    private ProvinceDTO province;
+    private long status;
 }

@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface IOriginService {
     List<OriginEntity> findAll();
+    OriginEntity save(OriginEntity origin);
+    OriginEntity findByCode(String code);
 }

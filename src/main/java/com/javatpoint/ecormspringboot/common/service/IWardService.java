@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface IWardService{
     List<WardEntity> findAllByProvinceIdAndDistrictId(Long provinceId, Long districtId);
+    WardEntity findOne(long id);
 }

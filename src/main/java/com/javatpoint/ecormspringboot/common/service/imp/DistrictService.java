@@ -20,4 +20,9 @@ public class DistrictService implements IDistrictService {
     public List<DistrictEntity> findAllByProvinceId(long id) {
         return this.districtRepository.findAllByProvinceId(id);
     }
+
+    @Override
+    public DistrictEntity findOne(long id) {
+        return this.districtRepository.findOne(id);
+    }
 }

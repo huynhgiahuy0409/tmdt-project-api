@@ -2,9 +2,12 @@ package com.javatpoint.ecormspringboot.common.request;
 
 import com.javatpoint.ecormspringboot.common.dto.SizeDTO;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
-@Data
+@Getter
+@Setter
 public class ProductRequest {
     private String name;
     private String SKU;

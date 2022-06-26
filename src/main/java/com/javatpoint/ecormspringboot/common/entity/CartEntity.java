@@ -14,10 +14,10 @@ import java.util.Set;
 @Setter
 public class CartEntity extends BaseEntity{
 
-    @OneToMany(mappedBy = "cart",cascade = {CascadeType.ALL})
-    private Set<PendingItemEntity> pendingOrders = new HashSet<PendingItemEntity>();
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private UserEntity user;
+
+    @OneToMany(mappedBy = "cart",cascade = {CascadeType.ALL})
+    private Set<CartItemEntity> cartItems = new HashSet<CartItemEntity>();
 }

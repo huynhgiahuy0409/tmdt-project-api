@@ -7,4 +7,5 @@ import java.util.List;
 public interface IDistrictService {
     public List<DistrictEntity> findAll();
     public List<DistrictEntity> findAllByProvinceId(long id);
+    public DistrictEntity findOne(long id);
 }

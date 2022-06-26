@@ -1,17 +1,17 @@
 package com.javatpoint.ecormspringboot.common.request;
 
-public class RegisterAccountRequest {
+public class UserAccountRequest {
     private String username;
     private String password;
     private String fullName;
 
-    public RegisterAccountRequest(String username, String password, String fullname) {
+    public UserAccountRequest(String username, String password, String fullname) {
         this.username = username;
         this.password = password;
         this.fullName = fullname;
     }
 
-    public RegisterAccountRequest() {
+    public UserAccountRequest() {
     }
 
     public String getUsername() {

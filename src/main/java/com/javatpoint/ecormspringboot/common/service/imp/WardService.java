@@ -18,4 +18,9 @@ public class WardService implements IWardService {
     public List<WardEntity> findAllByProvinceIdAndDistrictId(Long provinceId, Long districtId) {
         return this.wardRepository.findAllByProvinceIdAndDistrictId(provinceId, districtId);
     }
+
+    @Override
+    public WardEntity findOne(long id) {
+        return this.wardRepository.findOne(id);
+    }
 }

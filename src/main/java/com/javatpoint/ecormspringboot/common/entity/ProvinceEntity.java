@@ -24,4 +24,7 @@ public class ProvinceEntity extends BaseEntity{
 
     @OneToMany(mappedBy = "province", cascade = CascadeType.ALL)
     private Set<WardEntity> wards = new HashSet<WardEntity>();
+
+    @OneToMany(mappedBy = "province", cascade = {CascadeType.REMOVE})
+    private Set<AddressEntity> addresses = new HashSet<AddressEntity>();
 }

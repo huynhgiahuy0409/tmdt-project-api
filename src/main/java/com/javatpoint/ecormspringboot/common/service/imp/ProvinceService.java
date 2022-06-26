@@ -18,4 +18,9 @@ public class ProvinceService implements IProvinceService {
     public List<ProvinceEntity> findAll(){
         return this.provinceRepository.findAll();
     }
+
+    @Override
+    public ProvinceEntity findOne(long id) {
+        return this.provinceRepository.findOne(id);
+    }
 }

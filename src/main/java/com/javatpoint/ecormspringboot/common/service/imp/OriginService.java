@@ -17,4 +17,14 @@ public class OriginService implements IOriginService {
     public List<OriginEntity> findAll() {
         return this.originRepository.findAll();
     }
+
+    @Override
+    public OriginEntity save(OriginEntity origin) {
+        return this.originRepository.save(origin);
+    }
+
+    @Override
+    public OriginEntity findByCode(String code) {
+        return this.originRepository.findByCode(code);
+    }
 }
