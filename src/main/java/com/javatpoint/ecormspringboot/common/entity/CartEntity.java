@@ -5,7 +5,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,5 +22,5 @@ public class CartEntity extends BaseEntity{
     private UserEntity user;
 
     @OneToMany(mappedBy = "cart",cascade = {CascadeType.ALL})
-    private Set<CartItemEntity> cartItems = new HashSet<CartItemEntity>();
+    private List<CartItemEntity> cartItems = new ArrayList<CartItemEntity>();
 }

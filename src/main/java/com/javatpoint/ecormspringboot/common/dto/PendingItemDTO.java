@@ -10,6 +10,7 @@ import java.util.Set;
 @Getter
 @Setter
 public class PendingItemDTO {
+    private long id;
     private ProductDTO product;
     private int quantity;
 }

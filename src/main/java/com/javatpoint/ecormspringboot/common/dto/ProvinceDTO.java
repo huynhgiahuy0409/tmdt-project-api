@@ -13,4 +13,6 @@ public class ProvinceDTO {
     private String name;
 
     private String code;
+
+    private String domain;
 }

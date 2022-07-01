@@ -4,9 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.*;
 
 @Entity
 @Table(name = "cart_item")
@@ -14,7 +12,7 @@ import java.util.SortedSet;
 @Setter
 public class CartItemEntity extends BaseEntity{
     @OneToMany(mappedBy = "cartItem", cascade = CascadeType.ALL)
-    private Set<PendingItemEntity> pendingItems = new HashSet<PendingItemEntity>();
+    private List<PendingItemEntity> pendingItems = new ArrayList<PendingItemEntity>();
 
     @ManyToOne
     @JoinColumn(name = "shop_id")

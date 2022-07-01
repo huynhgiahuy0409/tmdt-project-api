@@ -13,5 +13,6 @@ public class ShopDTO {
     private long id;
     private String name;
     private ImageDTO image;
+    private UserDTO user;
     private Set<ProductDTO> products;
 }

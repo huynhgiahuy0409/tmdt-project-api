@@ -2,6 +2,7 @@ package com.javatpoint.ecormspringboot.common.util;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -17,7 +18,10 @@ public class ObjectMapperUtils {
 		return sourceCollection.stream().map(entity -> this.modelMapper.map(entity, desClass))
 				.collect(Collectors.toList());
 	}
-
+	public <D, T> Set<D> mapAllSet(final Collection<T> sourceCollection, Class<D> desClass) {
+		return sourceCollection.stream().map(entity -> this.modelMapper.map(entity, desClass))
+				.collect(Collectors.toSet());
+	}
 	public <D, T> D map(T entity, Class<D> desClass) {
 		return this.modelMapper.map(entity, desClass);
 	}

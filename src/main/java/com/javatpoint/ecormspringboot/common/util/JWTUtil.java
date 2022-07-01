@@ -48,7 +48,7 @@ public class JWTUtil {
 
 		}
 		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + SystemContance.EXPIRATION_TIME + SystemContance.REFRESH_TIME))
+				.setExpiration(new Date(System.currentTimeMillis() + SystemContance.REFRESH_TIME))
 				.signWith(SignatureAlgorithm.HS512, SystemContance.SECREC).compact();
 	}
 

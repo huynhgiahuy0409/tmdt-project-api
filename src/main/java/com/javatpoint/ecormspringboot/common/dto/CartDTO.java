@@ -11,5 +11,5 @@ import java.util.Set;
 @Setter
 public class CartDTO {
     private long id;
-    private Set<CartItemDTO> cartItems;
+    private List<CartItemDTO> cartItems;
 }

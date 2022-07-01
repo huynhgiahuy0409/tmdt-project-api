@@ -18,6 +18,9 @@ public class ProvinceEntity extends BaseEntity{
     @Column(name = "_code")
     private String code;
 
+    @Column(name = "_domain")
+    private String domain;
+
     @OneToMany(mappedBy = "province", cascade = CascadeType.ALL)
     private Set<DistrictEntity> districts = new HashSet<DistrictEntity>();
 
