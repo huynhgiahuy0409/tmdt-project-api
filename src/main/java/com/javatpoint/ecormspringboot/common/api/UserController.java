@@ -5,6 +5,7 @@ import com.javatpoint.ecormspringboot.common.entity.CartEntity;
 import com.javatpoint.ecormspringboot.common.entity.ShopEntity;
 import com.javatpoint.ecormspringboot.common.entity.UserEntity;
 import com.javatpoint.ecormspringboot.common.request.UserAccountRequest;
+import com.javatpoint.ecormspringboot.common.service.imp.KeyFactoryService;
 import com.javatpoint.ecormspringboot.common.service.imp.UserService;
 import com.javatpoint.ecormspringboot.common.util.ObjectMapperUtils;
 import org.modelmapper.ModelMapper;
@@ -13,8 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import javax.xml.ws.Response;
 
 @RestController
 @RequestMapping(value = "/api/user")
@@ -27,6 +26,9 @@ public class UserController {
     private UserService userService;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private KeyFactoryService keyFactoryService;
 
     @PostMapping("/update")
     public ResponseEntity<UserDTO> fetchUser(@RequestBody UserDTO user) {
@@ -64,6 +66,7 @@ public class UserController {
             foundUserEntity.setPassword(this.passwordEncoder.encode(userAccountRequest.getPassword()));
         }
         UserEntity savedUserEntity = this.userService.save(foundUserEntity);
+        this.keyFactoryService.generativeKeyPair("RSA",1024,savedUserEntity.getId());
         return ResponseEntity.ok(true);
     }
 }

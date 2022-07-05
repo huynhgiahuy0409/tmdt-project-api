@@ -1,6 +1,6 @@
-package com.javatpoint.ecormspringboot.common.dto;
+package com.javatpoint.ecormspringboot.common.model;
 
-import lombok.Data;
+import com.javatpoint.ecormspringboot.common.dto.AddressDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,14 +8,12 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class UserDTO {
+public class ShopUser {
     private Long id;
 
     private String name;
 
     private String username;
-
-    private String password;
 
     private String fullName;
 
@@ -30,10 +28,4 @@ public class UserDTO {
     private String phoneNumber;
 
     private String role;
-
-    private CartDTO cart;
-
-    private ShopDTO shop;
-
-    private String publicKeyFilename;
 }

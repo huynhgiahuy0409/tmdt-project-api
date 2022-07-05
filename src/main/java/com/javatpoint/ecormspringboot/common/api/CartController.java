@@ -55,7 +55,6 @@ public class CartController {
         CartEntity cartEntity = userEntity.getCart();
         List<CartItemEntity> cartItemEntities = cartItemService.findAllByCart(cartEntity, new Sort(Sort.Direction.DESC, "modifiedDate"));
         for (CartItemEntity cartItemEntity : cartItemEntities) {
-            System.out.println("okokokok" + cartItemEntity.getId());
             cartItemEntity.setPendingItems(this.pendingItemService.findAllByCartItem(cartItemEntity, new Sort(Sort.Direction.DESC, "modifiedDate")));
             for (PendingItemEntity pendingItem : cartItemEntity.getPendingItems()) {
                 System.out.println(pendingItem.getProduct().getId());

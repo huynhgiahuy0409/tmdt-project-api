@@ -30,5 +30,7 @@ public class ImageEntity extends BaseEntity {
 	@JoinColumn(name = "brand_id")
 	private BrandEntity brand;
 
+	@OneToOne(mappedBy = "avatar")
+	private UserEntity user;
 
 }

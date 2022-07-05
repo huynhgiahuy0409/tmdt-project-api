@@ -2,6 +2,7 @@ package com.javatpoint.ecormspringboot.common.api;
 
 import com.javatpoint.ecormspringboot.common.model.EmailTemplate;
 import com.javatpoint.ecormspringboot.common.request.UserAccountRequest;
+import com.javatpoint.ecormspringboot.common.service.imp.KeyFactoryService;
 import com.javatpoint.ecormspringboot.common.service.imp.EmailService;
 import com.javatpoint.ecormspringboot.common.service.imp.OTPService;
 import com.javatpoint.ecormspringboot.common.service.imp.UserService;
@@ -32,6 +33,8 @@ public class OTPController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private KeyFactoryService keyFactoryService;
     @PostMapping("/generateOtp")
     public ResponseEntity generateOTP(@RequestBody UserAccountRequest registerAccountRequest) throws MessagingException {
         int otp = otpService.generateOTP(registerAccountRequest.getUsername());

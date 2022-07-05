@@ -4,7 +4,9 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -39,6 +41,10 @@ public class UserEntity extends BaseEntity {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<AddressEntity> addresses;
 
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "image_id")
+	private ImageEntity avatar;
+
 	private String email;
 
 	private String phoneNumber;
@@ -55,4 +61,9 @@ public class UserEntity extends BaseEntity {
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private ShopEntity shop;
+
+	@OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
+	private List<OrderEntity> orders = new ArrayList<OrderEntity>();
+
+	private String publicKeyFilename;
 }

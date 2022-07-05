@@ -2,6 +2,7 @@ package com.javatpoint.ecormspringboot.common.service.imp;
 
 import java.util.List;
 
+import com.javatpoint.ecormspringboot.common.entity.ProductEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -40,5 +41,10 @@ public class CategoryService implements ICategoryService {
 	@Override
 	public List<CategoryEntity> findAll(Pageable pageable) {
 		return this.categoryRepository.findAll(pageable).getContent();
+	}
+
+	@Override
+	public List<CategoryEntity> findByProducts(List<ProductEntity> products) {
+		return this.categoryRepository.findByProducts(products);
 	}
 }

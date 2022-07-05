@@ -4,6 +4,8 @@ import com.javatpoint.ecormspringboot.common.service.IFileStorageService;
 import com.javatpoint.ecormspringboot.common.util.CustomException;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,6 +26,10 @@ public class FileStorageService implements IFileStorageService {
     @Value("${FilePath}")
     private String imagePath;
 
+    @Value("${DigitalBillPath}")
+    private String digitalBillPath;
+
+    Path foundFile;
 
     public List<String> storeFiles(MultipartFile[] files){
         if(!Files.isDirectory(Paths.get(imagePath))){
@@ -48,5 +54,19 @@ public class FileStorageService implements IFileStorageService {
             filenames.add(fileName);
         });
         return filenames;
+    }
+
+    public Resource getFileAsResource(String filename) throws IOException {
+        Path uploadDirectory = Paths.get(digitalBillPath);
+        Files.list(uploadDirectory).forEach(file -> {
+            if(file.getFileName().toString().equals(filename)){
+                this.foundFile = file;
+                return;
+            }
+        });
+        if(foundFile != null){
+            return new UrlResource(foundFile.toUri());
+        }
+        return null;
     }
 }

@@ -75,13 +75,20 @@ public class ProductController {
         ProductEntity productEntity = this.productService.findOne(productId);
         return ResponseEntity.ok(this.mp.map(productEntity, ProductDTO.class));
     }
-
+    @PostMapping("/product/{productId}/view")
+    @Transactional
+    public void updateView(@PathVariable long productId){
+        ProductEntity productEntity = this.productService.findById(productId);
+        int curView = productEntity.getView();
+        productEntity.setView(curView + 1);
+    }
 
     @GetMapping("/product")
     public ResponseEntity<List<ProductDTO>> getProducts(@RequestParam int pageIndex, @RequestParam int pageSize,
                                                         @RequestParam(required = false) String dirSort, @RequestParam(required = false) String orderSort,
                                                         @RequestParam(required = false) String nameFilter, @RequestParam(required = false) Long categoryIdFilter,
                                                         @RequestParam(required = false) Long brandIdFilter, @RequestParam(required = false) Long ageIdFilter,
+                                                        @RequestParam(required = false) Long shopIdFilter,
                                                         @RequestParam(required = false) Long[] priceFilter) {
         Pageable initPageable = new PageRequest(pageIndex, pageSize);
         ProductSpecificationBuilder productSpecificationBuilder = new ProductSpecificationBuilder();
@@ -93,7 +100,6 @@ public class ProductController {
             } else if (dirSort.equals("desc")) {
                 initPageable = new PageRequest(pageIndex, pageSize, new Sort(Sort.Direction.DESC, orderSort));
             }
-
         }
         if (!StringUtils.isEmpty(nameFilter)) {
             productSpecificationBuilder.with("name", nameFilter, "like");
@@ -109,6 +115,9 @@ public class ProductController {
         }
         if (!StringUtils.isEmpty(priceFilter)) {
             productSpecificationBuilder.with("buyPrice", priceFilter, "between");
+        }
+        if (!StringUtils.isEmpty(shopIdFilter)) {
+            productSpecificationBuilder.with("shop", priceFilter, "in-equals");
         }
         initProductEntities = this.productService.findAll(productSpecificationBuilder.build(), initPageable);
         List<ProductDTO> result = this.om.mapAll(initProductEntities, ProductDTO.class);

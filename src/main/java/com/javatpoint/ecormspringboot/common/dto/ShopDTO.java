@@ -1,6 +1,7 @@
 package com.javatpoint.ecormspringboot.common.dto;
 
 import com.javatpoint.ecormspringboot.common.entity.ProductEntity;
+import com.javatpoint.ecormspringboot.common.model.ShopUser;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,6 @@ public class ShopDTO {
     private long id;
     private String name;
     private ImageDTO image;
-    private UserDTO user;
+    private ShopUser shopUser;
     private Set<ProductDTO> products;
 }

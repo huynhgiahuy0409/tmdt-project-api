@@ -6,10 +6,10 @@ import com.javatpoint.ecormspringboot.common.dto.PendingItemDTO;
 import com.javatpoint.ecormspringboot.common.dto.UserDTO;
 import com.javatpoint.ecormspringboot.common.entity.*;
 import com.javatpoint.ecormspringboot.common.request.AuthenticationRequest;
-import com.javatpoint.ecormspringboot.common.request.ReAccountRequest;
 import com.javatpoint.ecormspringboot.common.request.UserAccountRequest;
 import com.javatpoint.ecormspringboot.common.service.*;
 import com.javatpoint.ecormspringboot.common.service.imp.CustomUserDetailsService;
+import com.javatpoint.ecormspringboot.common.service.imp.KeyFactoryService;
 import com.javatpoint.ecormspringboot.common.util.JWTUtil;
 import com.javatpoint.ecormspringboot.common.util.ObjectMapperUtils;
 import com.javatpoint.ecormspringboot.response.AuthenticationResponse;
@@ -19,15 +19,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/api")
@@ -51,7 +48,8 @@ public class AuthController {
     private ITokenAuthenticationService tokenAuthenticationService;
     @Autowired
     private ObjectMapperUtils om;
-
+    @Autowired
+    private KeyFactoryService keyFactoryService;
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationRequest> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) {
         UserDetails userDetail = null;

@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -26,7 +28,7 @@ public class ProductEntity extends BaseEntity {
 	private double discountPercent;
 	private double buyPrice;
 	private int repository;
-
+	private int view;
 	@ManyToOne
 	@JoinColumn(name = "origin_id")
 	@Nationalized
@@ -66,4 +68,7 @@ public class ProductEntity extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name = "shop_id")
 	private ShopEntity shop;
+
+	@OneToMany(mappedBy = "product",cascade = {CascadeType.REFRESH} )
+	private List<OrderItemEntity> orderItems = new ArrayList<OrderItemEntity>();
 }
