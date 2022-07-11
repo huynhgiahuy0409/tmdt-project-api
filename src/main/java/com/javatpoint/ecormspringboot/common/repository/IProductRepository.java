@@ -1,6 +1,7 @@
 package com.javatpoint.ecormspringboot.common.repository;
 
 import com.javatpoint.ecormspringboot.common.entity.ProductEntity;
+import com.javatpoint.ecormspringboot.common.entity.ShopEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +14,5 @@ public interface IProductRepository extends JpaRepository<ProductEntity, Long>, 
     ProductEntity findById(long id);
     List<ProductEntity> findByNameContaining(String searchValue, Pageable pageable);
     List<ProductEntity> findBy(String searchValue, Pageable pageable);
+    ProductEntity findByShop(ShopEntity shop);
 }

@@ -44,6 +44,8 @@ public class OrderResponse {
 
     private String paymentMethod;
 
+    private String paymentStatus;
+
     private String digitBillFilename;
 
     private String digitalBillHash;

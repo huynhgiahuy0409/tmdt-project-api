@@ -44,6 +44,8 @@ public class OrderEntity extends BaseEntity{
 
     private String paymentMethod;
 
+    private String paymentStatus;
+
     private String digitBillFilename;
 
     private String digitalBillHash;

@@ -1,6 +1,7 @@
 package com.javatpoint.ecormspringboot.common.service.imp;
 
 
+import com.javatpoint.ecormspringboot.common.entity.ProductEntity;
 import com.javatpoint.ecormspringboot.common.entity.ShopEntity;
 import com.javatpoint.ecormspringboot.common.repository.IShopRepository;
 import com.javatpoint.ecormspringboot.common.service.IShopService;
@@ -24,4 +25,11 @@ public class ShopService implements IShopService {
     public List<ShopEntity> findByNameContaining(String name) {
         return this.shopRepository.findByNameContaining(name);
     }
+
+    @Override
+    public ShopEntity findByProducts(List<ProductEntity> products) {
+        return this.shopRepository.findByProducts(products);
+    }
+
+
 }

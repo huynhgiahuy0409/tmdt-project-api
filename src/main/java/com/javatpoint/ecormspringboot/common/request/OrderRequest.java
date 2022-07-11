@@ -45,4 +45,6 @@ public class OrderRequest {
 
     private String paymentMethod;
 
+    private String paymentStatus;
+
 }

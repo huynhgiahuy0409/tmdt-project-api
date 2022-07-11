@@ -2,6 +2,7 @@ package com.javatpoint.ecormspringboot.common.service.imp;
 
 import com.javatpoint.ecormspringboot.common.dto.ProductDTO;
 import com.javatpoint.ecormspringboot.common.entity.ProductEntity;
+import com.javatpoint.ecormspringboot.common.entity.ShopEntity;
 import com.javatpoint.ecormspringboot.common.repository.IProductRepository;
 import com.javatpoint.ecormspringboot.common.service.IProductService;
 import com.javatpoint.ecormspringboot.common.util.ConverterUtil;
@@ -56,6 +57,11 @@ public class ProductService implements IProductService {
     @Override
     public ProductEntity findOne(long id) {
         return this.productRepository.findOne(id);
+    }
+
+    @Override
+    public ProductEntity findByShop(ShopEntity shop) {
+        return this.productRepository.findByShop(shop);
     }
 
     @Override

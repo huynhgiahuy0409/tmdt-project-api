@@ -2,6 +2,7 @@ package com.javatpoint.ecormspringboot.common.service.imp;
 
 import com.javatpoint.ecormspringboot.common.entity.OrderEntity;
 import com.javatpoint.ecormspringboot.common.entity.ShopEntity;
+import com.javatpoint.ecormspringboot.common.entity.UserEntity;
 import com.javatpoint.ecormspringboot.common.repository.IOrderRepository;
 import com.javatpoint.ecormspringboot.common.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,10 @@ public class OrderService implements IOrderService {
     @Override
     public List<OrderEntity> findAllByShop(ShopEntity shopEntity) {
         return this.orderRepository.findAllByShop(shopEntity);
+    }
+
+    @Override
+    public List<OrderEntity> findAllByUser(UserEntity userEntity) {
+        return this.orderRepository.findAllByUser(userEntity);
     }
 }

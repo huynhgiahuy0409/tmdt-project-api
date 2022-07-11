@@ -13,6 +13,7 @@ import com.javatpoint.ecormspringboot.common.service.imp.UserService;
 import com.javatpoint.ecormspringboot.common.util.ObjectMapperUtils;
 import com.javatpoint.ecormspringboot.common.util.constance.SystemContance;
 import com.javatpoint.ecormspringboot.response.OrderResponse;
+import org.hibernate.criterion.Order;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -50,14 +51,13 @@ public class OrderController {
 
     @PostMapping("/user/{userId}/order")
     @Transactional
-    public ResponseEntity<Boolean> createOrder(@PathVariable long userId, @RequestBody OrderRequest orderRequest) throws IOException {
+    public ResponseEntity<OrderResponse> createOrder(@PathVariable long userId, @RequestBody OrderRequest orderRequest) throws IOException {
         this.mp.getConfiguration().setFieldMatchingEnabled(true);
         this.mp.getConfiguration().setAmbiguityIgnored(true);
         UserEntity foundUser = this.userService.findById(userId);
         OrderEntity newOrder = this.mp.map(orderRequest, OrderEntity.class);
         ShopEntity foundShopEntity = this.shopService.findOne(orderRequest.getShopId());
         newOrder.setShop(foundShopEntity);
-        newOrder.setStatus("1");
         List<OrderItemEntity> orderItemEntityList = new ArrayList<OrderItemEntity>();
         for (OrderItemRequest orderItemRequest : orderRequest.getOrderItems()) {
             ProductEntity foundProduct = this.productService.findById(orderItemRequest.getProductId());
@@ -77,13 +77,15 @@ public class OrderController {
         fos.write(savedOrder.getId() + "");
         fos.flush();
         fos.close();
-        return ResponseEntity.ok(true);
+        OrderResponse result = this.mp.map(savedOrder, OrderResponse.class);
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/user/{userId}/order")
     @Transactional
     public ResponseEntity<List<OrderResponse>> findAll(@PathVariable long userId){
-        List<OrderEntity> foundOrderEntities = this.orderService.findAll();
+        UserEntity foundUser = this.userService.findById(userId);
+        List<OrderEntity> foundOrderEntities = this.orderService.findAllByUser(foundUser);
         List<OrderResponse> result = this.om.mapAll(foundOrderEntities, OrderResponse.class);
         return ResponseEntity.ok(result);
     }
@@ -105,9 +107,19 @@ public class OrderController {
     }
     @GetMapping("/order/{orderId}/status/{status}")
     @Transactional
-    public ResponseEntity<Boolean> updateStatus(@PathVariable long orderId, @PathVariable String status){
+    public synchronized  ResponseEntity<Boolean> updateStatus(@PathVariable long orderId, @PathVariable String status){
         OrderEntity foundOrder = this.orderService.findOne(orderId);
         foundOrder.setStatus(status);
+        System.out.println(status);
+        this.orderService.save(foundOrder);
+        return ResponseEntity.ok(true);
+    }
+    @GetMapping("/order/{orderId}/payment-status/{paymentStatus}")
+    @Transactional
+    public synchronized ResponseEntity<Boolean> updatePaymentStatus(@PathVariable long orderId, @PathVariable String paymentStatus){
+        OrderEntity foundOrder = this.orderService.findOne(orderId);
+        foundOrder.setPaymentStatus(paymentStatus);
+        this.orderService.save(foundOrder);
         return ResponseEntity.ok(true);
     }
     @GetMapping("/shop/{shopId}/order")
@@ -116,6 +128,13 @@ public class OrderController {
         ShopEntity foundShop = this.shopService.findOne(shopId);
         List<OrderEntity> orderEntities = this.orderService.findAllByShop(foundShop);
         List<OrderResponse> result = this.om.mapAll(orderEntities, OrderResponse.class);
+        return ResponseEntity.ok(result);
+    }
+    @GetMapping("/order/{orderId}")
+    @Transactional
+    public ResponseEntity<OrderResponse> findById(@PathVariable long orderId){
+        OrderEntity foundOrder = this.orderService.findOne(orderId);
+        OrderResponse result = this.mp.map(foundOrder, OrderResponse.class);
         return ResponseEntity.ok(result);
     }
 }

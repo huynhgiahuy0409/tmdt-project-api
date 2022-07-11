@@ -1,8 +1,10 @@
 package com.javatpoint.ecormspringboot.common.api;
 
 import com.javatpoint.ecormspringboot.common.dto.ShopDTO;
+import com.javatpoint.ecormspringboot.common.entity.ProductEntity;
 import com.javatpoint.ecormspringboot.common.entity.ShopEntity;
 import com.javatpoint.ecormspringboot.common.entity.UserEntity;
+import com.javatpoint.ecormspringboot.common.service.IProductService;
 import com.javatpoint.ecormspringboot.common.service.IShopService;
 import com.javatpoint.ecormspringboot.common.service.IUserService;
 import com.javatpoint.ecormspringboot.common.service.imp.VerifyDigitalBillService;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -28,6 +31,9 @@ public class ShopController {
     private IShopService shopService;
 
     @Autowired
+    private IProductService productService;
+
+    @Autowired
     private VerifyDigitalBillService verifyDigitalBillService;
 
     @Autowired
@@ -37,6 +43,15 @@ public class ShopController {
     public ResponseEntity<ShopDTO> findShopByUserId(@PathVariable long userId){
         UserEntity userEntity = this.userService.findById(userId);
         ShopEntity shopEntity = userEntity.getShop();
+        ShopDTO result = this.om.map(shopEntity, ShopDTO.class);
+        return ResponseEntity.ok(result);
+    }
+    @GetMapping("/product/{productId}/shop")
+    public ResponseEntity<ShopDTO> findShopByProductId(@PathVariable long productId){
+        ProductEntity foundProduct = this.productService.findById(productId);
+        List<ProductEntity> productEntities = new ArrayList<>();
+        productEntities.add(foundProduct);
+        ShopEntity shopEntity = shopService.findByProducts(productEntities);
         ShopDTO result = this.om.map(shopEntity, ShopDTO.class);
         return ResponseEntity.ok(result);
     }

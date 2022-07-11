@@ -5,6 +5,9 @@ import java.util.Base64;
 public class SystemContance {
 	public static final long EXPIRATION_TIME = 86400000;
 	public static final long REFRESH_TIME = 90000000;
+	public static final String MOMO_PHONE = "0776425942";
+	public static final String MOMO_API_KEY = "5VJPQ0RXAL2YM9KS83H9";
+	public static final String MOMO_LIMIT_TRANSACTION_HISTORY = "10";
 	public static final String SECREC = "huynhgiahuy";
 	public static final String TOKEN_PREFIX = "Bearer";
 	public static final String AUTHORIZATION_KEY_IN_HEADER = "Authorization";

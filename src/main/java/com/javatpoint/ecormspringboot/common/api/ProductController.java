@@ -50,6 +50,8 @@ public class ProductController {
     @Autowired
     private IRecommendAgeService recommendService;
     @Autowired
+    private IShopService shopService;
+    @Autowired
     private IMaterialService materialService;
     @Autowired
     private IBrandService brandService;
@@ -73,6 +75,12 @@ public class ProductController {
     @GetMapping("/product/{productId}")
     public ResponseEntity<ProductDTO> findOne(@PathVariable Long productId) {
         ProductEntity productEntity = this.productService.findOne(productId);
+        return ResponseEntity.ok(this.mp.map(productEntity, ProductDTO.class));
+    }
+    @GetMapping("/shop/{shopId}/product")
+    public ResponseEntity<ProductDTO> findByShop(@PathVariable Long shopId) {
+        ShopEntity foundShop = this.shopService.findOne(shopId);
+        ProductEntity productEntity = this.productService.findByShop(foundShop);
         return ResponseEntity.ok(this.mp.map(productEntity, ProductDTO.class));
     }
     @PostMapping("/product/{productId}/view")
@@ -117,7 +125,7 @@ public class ProductController {
             productSpecificationBuilder.with("buyPrice", priceFilter, "between");
         }
         if (!StringUtils.isEmpty(shopIdFilter)) {
-            productSpecificationBuilder.with("shop", priceFilter, "in-equals");
+            productSpecificationBuilder.with("shop", shopIdFilter, "in-equals");
         }
         initProductEntities = this.productService.findAll(productSpecificationBuilder.build(), initPageable);
         List<ProductDTO> result = this.om.mapAll(initProductEntities, ProductDTO.class);

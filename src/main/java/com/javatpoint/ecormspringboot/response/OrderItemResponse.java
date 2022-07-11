@@ -12,5 +12,5 @@ import java.util.Set;
 public class OrderItemResponse {
     private ProductDTO product;
 
-    private String quantity;
+    private long quantity;
 }

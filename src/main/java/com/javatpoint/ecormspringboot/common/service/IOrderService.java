@@ -2,6 +2,7 @@ package com.javatpoint.ecormspringboot.common.service;
 
 import com.javatpoint.ecormspringboot.common.entity.OrderEntity;
 import com.javatpoint.ecormspringboot.common.entity.ShopEntity;
+import com.javatpoint.ecormspringboot.common.entity.UserEntity;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface IOrderService {
     OrderEntity findOne(long id);
 
     List<OrderEntity> findAllByShop(ShopEntity shopEntity);
+
+    List<OrderEntity> findAllByUser(UserEntity userEntity);
 }
